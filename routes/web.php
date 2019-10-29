@@ -28,6 +28,9 @@ Route::get('/sitios', function () {
 Route::get('/distancias', function () {
     return view('distancias');
 });
+Route::get('/rendiciones', function () {
+    return view('rendiciones');
+});
 
 Route::get('/pruebas', 'SitiosSQLSRVController@importar');
 Route::get('/pruebaspdf', function(){

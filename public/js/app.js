@@ -2000,6 +2000,139 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      sitios: [],
+      distancias: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/distancia').then(function (response) {
+      _this.distancias = response.data;
+    });
+    axios.get('/sitio').then(function (response) {
+      _this.sitios = response.data;
+    });
+  },
+  methods: {
+    AgregarDistancia: function AgregarDistancia() {
+      this.distancias.push({
+        id_sitio_desde: '',
+        id_sitio_hasta: '',
+        kilometraje: '0',
+        sitio_desde: '',
+        sitio_hasta: ''
+      });
+    },
+    NuevaDistancia: function NuevaDistancia(distancia, index) {
+      this.distancias.splice(index, 1, distancia);
+      swal('Creado!', 'La distancia fue guardada!', 'success');
+    },
+    ImportarDistancia: function ImportarDistancia(distancia) {
+      for (var i in distancia) {
+        this.distancias.push(distancia[i]);
+      }
+    },
+    ActualizarDistancia: function ActualizarDistancia(distancia, index) {
+      this.distancias.splice(index, 1, distancia);
+      swal('Actualizado!', 'La distancia fue actualizada', 'info');
+    },
+    EliminarDistancia: function EliminarDistancia(index) {
+      this.distancias.splice(index, 1);
+    },
+    ImportarDistanciaModal: function ImportarDistanciaModal() {
+      $('#ImportarSitioModal').modal('show');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/sitios/SitiosComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sucursal/sitios/SitiosComponent.vue?vue&type=script&lang=js& ***!
@@ -40046,6 +40179,280 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "row justify-content-center",
+      staticStyle: { margin: "0px" }
+    },
+    [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          { staticClass: "card shadow p-3 mb-5 bg-white rounded" },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Rendiciones\r\n\r\n                "),
+              _c(
+                "div",
+                {
+                  staticClass: "btn-group",
+                  staticStyle: { float: "right" },
+                  attrs: { role: "group", "aria-label": "Basic example" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "tooltip",
+                        "data-placement": "auto",
+                        title: "Importar Distancias desde Excel"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-upload" }),
+                      _vm._v(" Importar - EXCEL")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-map-signs" }),
+                      _vm._v(" Agregar Distancia")
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("importar-distancia-component", {
+              on: {
+                importar: function($event) {
+                  return _vm.ImportarDistancia.apply(void 0, arguments)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(1)
+          ],
+          1
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-success",
+        attrs: {
+          href: "/distancia/export",
+          type: "button",
+          "data-toggle": "tooltip",
+          "data-placement": "auto",
+          title: "Exportar Distancias a Excel"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-download" }), _vm._v(" Exportar - EXCEL")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c(
+        "div",
+        { staticClass: "accordion", attrs: { id: "accordionExample" } },
+        [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header", attrs: { id: "headingOne" } },
+              [
+                _c("h2", { staticClass: "mb-0" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "collapse",
+                        "data-target": "#collapseOne",
+                        "aria-expanded": "true",
+                        "aria-controls": "collapseOne"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n          Collapsible Group Item #1\r\n        "
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "collapse show",
+                attrs: {
+                  id: "collapseOne",
+                  "aria-labelledby": "headingOne",
+                  "data-parent": "#accordionExample"
+                }
+              },
+              [_c("div", { staticClass: "card-body" })]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header", attrs: { id: "headingTwo" } },
+              [
+                _c("h2", { staticClass: "mb-0" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link collapsed",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "collapse",
+                        "data-target": "#collapseTwo",
+                        "aria-expanded": "false",
+                        "aria-controls": "collapseTwo"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n          Collapsible Group Item #2\r\n        "
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "collapse",
+                attrs: {
+                  id: "collapseTwo",
+                  "aria-labelledby": "headingTwo",
+                  "data-parent": "#accordionExample"
+                }
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _vm._v(
+                    "\r\n        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.\r\n      "
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header", attrs: { id: "headingThree" } },
+              [
+                _c("h2", { staticClass: "mb-0" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-link collapsed",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "collapse",
+                        "data-target": "#collapseThree",
+                        "aria-expanded": "false",
+                        "aria-controls": "collapseThree"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n          Collapsible Group Item #3\r\n        "
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "collapse",
+                attrs: {
+                  id: "collapseThree",
+                  "aria-labelledby": "headingThree",
+                  "data-parent": "#accordionExample"
+                }
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _vm._v(
+                    "\r\n        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.\r\n      "
+                  )
+                ])
+              ]
+            )
+          ])
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/sitios/SitiosComponent.vue?vue&type=template&id=f4e26ffc&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sucursal/sitios/SitiosComponent.vue?vue&type=template&id=f4e26ffc& ***!
@@ -54328,7 +54735,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('sitios-component', __webpack_require__(/*! ./components/sucursal/sitios/SitiosComponent.vue */ "./resources/js/components/sucursal/sitios/SitiosComponent.vue")["default"]);
 Vue.component('distancias-component', __webpack_require__(/*! ./components/sucursal/distancias/DistanciasComponent.vue */ "./resources/js/components/sucursal/distancias/DistanciasComponent.vue")["default"]);
 Vue.component('distancia-component', __webpack_require__(/*! ./components/sucursal/distancias/DistanciaComponent.vue */ "./resources/js/components/sucursal/distancias/DistanciaComponent.vue")["default"]);
-Vue.component('importar-distancia-component', __webpack_require__(/*! ./components/sucursal/distancias/ImportarDistanciaComponent.vue */ "./resources/js/components/sucursal/distancias/ImportarDistanciaComponent.vue")["default"]);
+Vue.component('importar-distancia-component', __webpack_require__(/*! ./components/sucursal/distancias/ImportarDistanciaComponent.vue */ "./resources/js/components/sucursal/distancias/ImportarDistanciaComponent.vue")["default"]); // RENDICIONES
+
+Vue.component('rendiciones-component', __webpack_require__(/*! ./components/sucursal/rendiciones/RendicionesComponent.vue */ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue")["default"]);
 Vue.component('tareas-component', __webpack_require__(/*! ./components/tarea/TareasComponent.vue */ "./resources/js/components/tarea/TareasComponent.vue")["default"]);
 Vue.component('form-tarea-component', __webpack_require__(/*! ./components/tarea/FormTareaComponent.vue */ "./resources/js/components/tarea/FormTareaComponent.vue")["default"]);
 Vue.component('tarea-component', __webpack_require__(/*! ./components/tarea/TareaComponent.vue */ "./resources/js/components/tarea/TareaComponent.vue")["default"]);
@@ -54614,6 +55023,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportarDistanciaComponent_vue_vue_type_template_id_5f92cdea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportarDistanciaComponent_vue_vue_type_template_id_5f92cdea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RendicionesComponent.vue?vue&type=template&id=d5df518c& */ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c&");
+/* harmony import */ var _RendicionesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RendicionesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RendicionesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/sucursal/rendiciones/RendicionesComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RendicionesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RendicionesComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RendicionesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RendicionesComponent.vue?vue&type=template&id=d5df518c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sucursal/rendiciones/RendicionesComponent.vue?vue&type=template&id=d5df518c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RendicionesComponent_vue_vue_type_template_id_d5df518c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -2078,6 +2078,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2085,8 +2156,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      form: new vform__WEBPACK_IMPORTED_MODULE_1__["Form"]({
+        id: '',
+        descripcion: ''
+      }),
       sitios: [],
-      distancias: []
+      distancias: [],
+      modoEdicion: false
     };
   },
   mounted: function mounted() {
@@ -2100,14 +2176,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     });
   },
   methods: {
-    AgregarDistancia: function AgregarDistancia() {
-      this.distancias.push({
-        id_sitio_desde: '',
-        id_sitio_hasta: '',
-        kilometraje: '0',
-        sitio_desde: '',
-        sitio_hasta: ''
-      });
+    AgregarNuevaRendicion: function AgregarNuevaRendicion() {
+      this.form.reset();
+      $('#NuevaRendicionModal').modal('show');
     },
     NuevaDistancia: function NuevaDistancia(distancia, index) {
       this.distancias.splice(index, 1, distancia);
@@ -40202,44 +40273,224 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "col-md-8" }, [
-        _c(
-          "div",
-          { staticClass: "card shadow p-3 mb-5 bg-white rounded" },
-          [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Rendiciones\r\n\r\n                "),
+        _c("div", { staticClass: "card shadow p-3 mb-5 bg-white rounded" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Rendiciones\r\n\r\n                "),
+            _c(
+              "div",
+              {
+                staticClass: "btn-group",
+                staticStyle: { float: "right" },
+                attrs: { role: "group", "aria-label": "Basic example" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.AgregarNuevaRendicion()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fab fa-rev" }),
+                    _vm._v(" Agregar Rendicion")
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "NuevaRendicionModal",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "NuevaRendicionModalLabel",
+                  "aria-hidden": "true"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "modal-dialog", attrs: { role: "document" } },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.modoEdicion
+                                ? _vm.ActualizarSitio()
+                                : _vm.NuevoSitio()
+                            },
+                            keydown: function($event) {
+                              return _vm.form.onKeydown($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "modal-header" }, [
+                            _vm.modoEdicion
+                              ? _c(
+                                  "h5",
+                                  {
+                                    staticClass: "modal-title",
+                                    attrs: { id: "NuevaRendicionModalLabel" }
+                                  },
+                                  [_vm._v("Modificar Rendicion")]
+                                )
+                              : _c(
+                                  "h5",
+                                  {
+                                    staticClass: "modal-title",
+                                    attrs: { id: "NuevaRendicionModalLabel" }
+                                  },
+                                  [_vm._v("Nueva Rendicion")]
+                                ),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-body" }, [
+                            _c("div", { staticClass: "form-row" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.id,
+                                    expression: "form.id"
+                                  }
+                                ],
+                                attrs: { name: "id", type: "hidden" },
+                                domProps: { value: _vm.form.id },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "id",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group col-md-12" },
+                                [
+                                  _c("label", [_vm._v("Descripcion")]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.form.descripcion,
+                                        expression: "form.descripcion"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    class: {
+                                      "is-invalid": _vm.form.errors.has(
+                                        "descripcion"
+                                      )
+                                    },
+                                    attrs: {
+                                      name: "descripcion",
+                                      type: "text",
+                                      placeholder: "Descripcion de la Rendicion"
+                                    },
+                                    domProps: { value: _vm.form.descripcion },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.form,
+                                          "descripcion",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("has-error", {
+                                    attrs: {
+                                      form: _vm.form,
+                                      field: "descripcion"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-footer" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                }
+                              },
+                              [_vm._v("Cerrar")]
+                            ),
+                            _vm._v(" "),
+                            _vm.modoEdicion
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [_vm._v("Modificar")]
+                                )
+                              : _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-success",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [_vm._v("Guardar")]
+                                )
+                          ])
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(1),
+              _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "btn-group",
-                  staticStyle: { float: "right" },
-                  attrs: { role: "group", "aria-label": "Basic example" }
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
                 },
                 [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "tooltip",
-                        "data-placement": "auto",
-                        title: "Importar Distancias desde Excel"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-upload" }),
-                      _vm._v(" Importar - EXCEL")
-                    ]
-                  ),
-                  _vm._v(" "),
                   _c(
                     "button",
                     {
@@ -40251,27 +40502,321 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c("i", { staticClass: "fas fa-map-signs" }),
-                      _vm._v(" Agregar Distancia")
-                    ]
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
                   )
                 ]
               )
             ]),
             _vm._v(" "),
-            _c("importar-distancia-component", {
-              on: {
-                importar: function($event) {
-                  return _vm.ImportarDistancia.apply(void 0, arguments)
-                }
-              }
-            }),
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(1)
-          ],
-          1
-        )
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row alert alert-dark " }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-6 my-auto",
+                  staticStyle: { "text-align": "end" },
+                  attrs: { role: "group" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-eye" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ImportarDistanciaModal()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-file-pdf" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
       ])
     ]
   )
@@ -40282,169 +40827,107 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "button",
       {
-        staticClass: "btn btn-success",
+        staticClass: "close",
         attrs: {
-          href: "/distancia/export",
           type: "button",
-          "data-toggle": "tooltip",
-          "data-placement": "auto",
-          title: "Exportar Distancias a Excel"
+          "data-dismiss": "modal",
+          "aria-label": "Close"
         }
       },
-      [_c("i", { staticClass: "fas fa-download" }), _vm._v(" Exportar - EXCEL")]
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c(
-        "div",
-        { staticClass: "accordion", attrs: { id: "accordionExample" } },
-        [
-          _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-header", attrs: { id: "headingOne" } },
-              [
-                _c("h2", { staticClass: "mb-0" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-link",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "collapse",
-                        "data-target": "#collapseOne",
-                        "aria-expanded": "true",
-                        "aria-controls": "collapseOne"
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n          Collapsible Group Item #1\r\n        "
-                      )
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse show",
-                attrs: {
-                  id: "collapseOne",
-                  "aria-labelledby": "headingOne",
-                  "data-parent": "#accordionExample"
-                }
-              },
-              [_c("div", { staticClass: "card-body" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-header", attrs: { id: "headingTwo" } },
-              [
-                _c("h2", { staticClass: "mb-0" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-link collapsed",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "collapse",
-                        "data-target": "#collapseTwo",
-                        "aria-expanded": "false",
-                        "aria-controls": "collapseTwo"
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n          Collapsible Group Item #2\r\n        "
-                      )
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse",
-                attrs: {
-                  id: "collapseTwo",
-                  "aria-labelledby": "headingTwo",
-                  "data-parent": "#accordionExample"
-                }
-              },
-              [
-                _c("div", { staticClass: "card-body" }, [
-                  _vm._v(
-                    "\r\n        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.\r\n      "
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-header", attrs: { id: "headingThree" } },
-              [
-                _c("h2", { staticClass: "mb-0" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-link collapsed",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "collapse",
-                        "data-target": "#collapseThree",
-                        "aria-expanded": "false",
-                        "aria-controls": "collapseThree"
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n          Collapsible Group Item #3\r\n        "
-                      )
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse",
-                attrs: {
-                  id: "collapseThree",
-                  "aria-labelledby": "headingThree",
-                  "data-parent": "#accordionExample"
-                }
-              },
-              [
-                _c("div", { staticClass: "card-body" }, [
-                  _vm._v(
-                    "\r\n        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.\r\n      "
-                  )
-                ])
-              ]
-            )
-          ])
-        ]
-      )
-    ])
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #1")])
+        ]),
+        _vm._v(" "),
+        _c("small", [
+          _vm._v(
+            "\r\n                    Fecha de Creacion: 30/10/2019 10:25\r\n                  "
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #2")])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #3")])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #2")])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #2")])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
+      [
+        _c("h5", { staticStyle: { margin: "0px" } }, [
+          _c("b", [_vm._v("Rendicion #4")])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -40828,11 +41311,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       tipo_direccion.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -40912,11 +41395,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       tipo_direccion.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41114,9 +41597,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(pais.descripcion) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41195,9 +41678,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(pais.descripcion) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41293,11 +41776,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       departamento.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41380,11 +41863,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       departamento.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41471,9 +41954,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(ciudad.descripcion) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41551,9 +42034,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(ciudad.descripcion) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41648,11 +42131,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       tipo_sitio.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41732,11 +42215,11 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(
                                                       tipo_sitio.descripcion
                                                     ) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )
@@ -41862,9 +42345,9 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "\r\n                                                        " +
+                                                "\r\n                                                    " +
                                                   _vm._s(estado.descripcion) +
-                                                  "\r\n                                                    "
+                                                  "\r\n                                                "
                                               )
                                             ]
                                           )
@@ -41927,9 +42410,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                                        " +
+                                                  "\r\n                                                    " +
                                                     _vm._s(estado.descripcion) +
-                                                    "\r\n                                                    "
+                                                    "\r\n                                                "
                                                 )
                                               ]
                                             )

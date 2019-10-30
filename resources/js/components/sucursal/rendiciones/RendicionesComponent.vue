@@ -2,66 +2,137 @@
 <div class="row justify-content-center" style="margin: 0px">
     <div class="col-md-8">
         <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-header">Rendiciones
+            <div class="card-header">Rendiciones
 
                 <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
-                    <a href="/distancia/export" type="button" class="btn btn-success" data-toggle="tooltip" data-placement="auto" title="Exportar Distancias a Excel" ><i class="fas fa-download"></i> Exportar - EXCEL</a>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-success" data-toggle="tooltip" data-placement="auto" title="Importar Distancias desde Excel" ><i class="fas fa-upload"></i> Importar - EXCEL</button>
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Distancia</button>
+                <button @click="AgregarNuevaRendicion()" class="btn btn-primary" type="button"><i class="fab fa-rev"></i> Agregar Rendicion</button>
+                </div>
+                <div class="modal fade" id="NuevaRendicionModal" tabindex="-1" role="dialog"
+                    aria-labelledby="NuevaRendicionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                             <form @submit.prevent="modoEdicion ? ActualizarSitio() : NuevoSitio()" @keydown="form.onKeydown($event)" > 
+                                <div class="modal-header">
+                                    <h5 v-if="modoEdicion" class="modal-title" id="NuevaRendicionModalLabel">Modificar Rendicion</h5>
+                                    <h5 v-else class="modal-title" id="NuevaRendicionModalLabel">Nueva Rendicion</h5>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="modal-body">
+                                    <div class="form-row">
+                                        <input v-model="form.id" name="id" type="hidden">
+                                        <div class="form-group col-md-12">
+                                            <label>Descripcion</label>
+                                            <input v-model="form.descripcion"
+                                                    name="descripcion"
+                                                    type="text" 
+                                                    class="form-control form-control-sm"
+                                                    placeholder="Descripcion de la Rendicion"
+                                                    :class="{ 'is-invalid': form.errors.has('descripcion') }"
+                                                    >
+                                                    <has-error :form="form" field="descripcion"></has-error>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button v-if="modoEdicion" type="submit" class="btn btn-primary">Modificar</button>
+                                    <button v-else type="submit" class="btn btn-success">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <importar-distancia-component @importar="ImportarDistancia(...arguments)"></importar-distancia-component>
-            <div class="card-body">
-                <div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </button>
-      </h2>
-    </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
+            <div class="card-body">
+              <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #1</b></h5>
+                  <small >
+                    Fecha de Creacion: 30/10/2019 10:25
+                  </small>
+                </div>
+                
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
+                <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
+
+                </div>
+                
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
+
+                <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #3</b></h5>
+
+                </div>
+                
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
+                <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
+
+                </div>
+                
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
+                <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
+
+                </div>
+                
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
+                <div class="row alert alert-dark ">
+                    <div class="col-md-6 my-auto" role="alert">
+
+                   <h5 style="margin: 0px"><b>Rendicion #4</b></h5>
+
+                </div>
+                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
+                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
+                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
+                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+                  </div>
+              </div>
             </div>
         </div>
     </div>
-</div>
-
+</div> 
 </template>
 <script>
     import Vue from 'vue' 
@@ -72,8 +143,13 @@
     export default {
         data(){
             return{
+              form:new Form({
+                    id: '',
+                    descripcion: '',
+                }),
                 sitios:[],
                 distancias:[],
+                modoEdicion: false,
             }
         },
         mounted() {
@@ -88,14 +164,9 @@
             });
         },
         methods: {
-            AgregarDistancia(){
-                this.distancias.push({id_sitio_desde: '',
-                    id_sitio_hasta: '',
-                    kilometraje: '0',
-                    sitio_desde: '',
-                    sitio_hasta: ''
-                        }
-                    );
+            AgregarNuevaRendicion(){
+                this.form.reset();
+                $('#NuevaRendicionModal').modal('show');
             },
             NuevaDistancia(distancia, index){
                 this.distancias.splice(index, 1, distancia);

@@ -2162,6 +2162,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       }),
       sitios: [],
       distancias: [],
+      rendiciones: [],
       modoEdicion: false
     };
   },
@@ -2177,8 +2178,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
   },
   methods: {
     AgregarNuevaRendicion: function AgregarNuevaRendicion() {
+      this.modoEdicion = false;
       this.form.reset();
       $('#NuevaRendicionModal').modal('show');
+    },
+    NuevaRendicion: function NuevaRendicion() {
+      this.form.post('/rendicion').then(function (response) {
+        console.log(response); // const rendicion= response.data;
+        // this.rendiciones.push(rendicion);
+        // this.form.reset();
+      });
     },
     NuevaDistancia: function NuevaDistancia(distancia, index) {
       this.distancias.splice(index, 1, distancia);
@@ -40328,8 +40337,8 @@ var render = function() {
                             submit: function($event) {
                               $event.preventDefault()
                               _vm.modoEdicion
-                                ? _vm.ActualizarSitio()
-                                : _vm.NuevoSitio()
+                                ? _vm.ActualizarRendicion()
+                                : _vm.NuevaRendicion()
                             },
                             keydown: function($event) {
                               return _vm.form.onKeydown($event)

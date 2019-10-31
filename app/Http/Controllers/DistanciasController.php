@@ -21,7 +21,7 @@ class DistanciasController extends Controller
         return $distancias->each(function ($distancia){
                 $distancia->sitio_desde;
                 $distancia->sitio_hasta;
-                });
+            });
     }
 
     public function store(Request $request)

@@ -11,7 +11,7 @@
                     aria-labelledby="NuevaRendicionModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                             <form @submit.prevent="modoEdicion ? ActualizarSitio() : NuevoSitio()" @keydown="form.onKeydown($event)" > 
+                             <form @submit.prevent="modoEdicion ? ActualizarRendicion() : NuevaRendicion()" @keydown="form.onKeydown($event)" > 
                                 <div class="modal-header">
                                     <h5 v-if="modoEdicion" class="modal-title" id="NuevaRendicionModalLabel">Modificar Rendicion</h5>
                                     <h5 v-else class="modal-title" id="NuevaRendicionModalLabel">Nueva Rendicion</h5>
@@ -149,6 +149,7 @@
                 }),
                 sitios:[],
                 distancias:[],
+                rendiciones:[],
                 modoEdicion: false,
             }
         },
@@ -165,8 +166,19 @@
         },
         methods: {
             AgregarNuevaRendicion(){
+                this.modoEdicion = false;
                 this.form.reset();
                 $('#NuevaRendicionModal').modal('show');
+            },
+            NuevaRendicion(){
+                this.form.post('/rendicion')
+                     .then((response) => {
+                         console.log(response);
+                        // const rendicion= response.data;
+                        // this.rendiciones.push(rendicion);
+                        // this.form.reset();
+                     });
+                
             },
             NuevaDistancia(distancia, index){
                 this.distancias.splice(index, 1, distancia);

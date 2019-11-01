@@ -15,7 +15,15 @@ class CrearTablaRendiciones extends Migration
     {
         Schema::create('rendiciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('descripcion', 50);
+
+
+
+
+            $table->timestamp('creado_el');
+            $table->string('creado_por', 20);
+            $table->timestamp('actualizado_el')->nullable();
+            $table->string('actualizado_por', 20)->nullable();
         });
     }
 

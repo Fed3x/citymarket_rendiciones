@@ -9,6 +9,9 @@ use App\Rendicion;
 
 class RendicionesController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -16,7 +19,15 @@ class RendicionesController extends Controller
     }
     public function store(Request $request)
     {
-        return $request;
+        $rendicion = New Rendicion();
+        $rendicion->descripcion = $request->descripcion;
+        $rendicion->creado_el = Carbon::now();
+        $rendicion->creado_por = auth()->user()->usuario;
+        $rendicion->save();
+        $id = $rendicion->id;
+        $nueva_rendicion = Rendicion::where('id', $id)->get();
+  
+        return $nueva_rendicion->last();
     }
 
     public function update(Request $request, $id)

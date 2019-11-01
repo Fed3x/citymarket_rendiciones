@@ -22,6 +22,10 @@ class CrearTablaDistancias extends Migration
             $table->unsignedBigInteger('id_sitio_hasta');
             $table->foreign('id_sitio_hasta')->references('id')->on('org_sitios');
 
+            $table->timestamp('creado_el');
+            $table->string('creado_por', 20);
+            $table->timestamp('actualizado_el')->nullable();
+            $table->string('actualizado_por', 20)->nullable();
         });
     }
 

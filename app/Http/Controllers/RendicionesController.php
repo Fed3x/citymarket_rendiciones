@@ -15,7 +15,8 @@ class RendicionesController extends Controller
 
     public function index()
     {
-        
+        $rendiciones = Rendicion::orderBy('id')->get();
+        return $rendiciones;
     }
     public function store(Request $request)
     {
@@ -37,6 +38,7 @@ class RendicionesController extends Controller
 
     public function destroy($id)
     {
-        //
+        $distancia = Rendicion::findOrFail($id);
+        $distancia->delete();
     }
 }

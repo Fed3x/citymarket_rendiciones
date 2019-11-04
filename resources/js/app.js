@@ -26,6 +26,9 @@ Vue.component('distancia-component', require('./components/sucursal/distancias/D
 Vue.component('importar-distancia-component', require('./components/sucursal/distancias/ImportarDistanciaComponent.vue').default);
 // RENDICIONES
 Vue.component('rendiciones-component', require('./components/sucursal/rendiciones/RendicionesComponent.vue').default);
+Vue.component('rendicion-component', require('./components/sucursal/rendiciones/RendicionComponent.vue').default);
+Vue.component('detalles-component', require('./components/sucursal/rendiciones/DetallesComponent.vue').default);
+Vue.component('detalle-component', require('./components/sucursal/rendiciones/DetalleComponent.vue').default);
 
 
 Vue.component('tareas-component', require('./components/tarea/TareasComponent.vue').default);

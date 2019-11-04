@@ -49,86 +49,12 @@
             </div>
 
             <div class="card-body">
-              <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #1</b></h5>
-                  <small >
-                    Fecha de Creacion: 30/10/2019 10:25
-                  </small>
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #3</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #4</b></h5>
-
-                </div>
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
+                <rendicion-component
+                v-for="(rendicion, index) in rendiciones"
+                :key="rendicion.id"
+                :rendicion="rendicion"
+                :index="index"
+                ></rendicion-component>
             </div>
         </div>
     </div>
@@ -147,36 +73,29 @@
                     id: '',
                     descripcion: '',
                 }),
-                sitios:[],
-                distancias:[],
                 rendiciones:[],
                 modoEdicion: false,
             }
         },
         mounted() {
-            axios.get('/distancia')
+            axios.get('/rendicion')
                  .then((response)=>{
-                     
-                     this.distancias = response.data;
-            });
-            axios.get('/sitio')
-            .then((response)=>{
-                this.sitios = response.data;
+                    this.rendiciones = response.data;
             });
         },
         methods: {
             AgregarNuevaRendicion(){
                 this.modoEdicion = false;
                 this.form.reset();
-                $('#NuevaRendicionModal').modal('show');
+                $('#NuevaRendicionModal').modal({show: true, keyboard: false, backdrop: 'static'});
+
             },
             NuevaRendicion(){
                 this.form.post('/rendicion')
                      .then((response) => {
-                         console.log(response);
-                        // const rendicion= response.data;
-                        // this.rendiciones.push(rendicion);
-                        // this.form.reset();
+                        const rendicion= response.data;
+                        this.rendiciones.push(rendicion);
+                        this.form.reset();
                      });
                 
             },

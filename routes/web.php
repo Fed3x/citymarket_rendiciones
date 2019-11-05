@@ -49,6 +49,7 @@ Route::ApiResource('tarea', 'TareasController');
 Route::ApiResource('sitio', 'SitiosController');
 Route::ApiResource('distancia', 'DistanciasController');
 Route::ApiResource('rendicion', 'RendicionesController');
+Route::ApiResource('rendicion_detalles', 'RendicionDetallesController');
 
 Route::get('/logout', function(){
     Session::flush();

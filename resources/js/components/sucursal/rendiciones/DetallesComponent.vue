@@ -49,6 +49,7 @@
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
+        props:['rendicion'],
         data(){
             return{
             //   form:new Form({

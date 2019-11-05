@@ -54,6 +54,7 @@
                 :key="rendicion.id"
                 :rendicion="rendicion"
                 :index="index"
+                @eliminar="EliminarRendicion(index)"
                 ></rendicion-component>
             </div>
         </div>
@@ -120,8 +121,13 @@
                     'info'
                 )
             },
-            EliminarDistancia(index){
-                this.distancias.splice(index,1);
+            EliminarRendicion(index){
+                this.rendiciones.splice(index,1);
+                swal(
+                    'Eliminado!',
+                    'La distancia fue eliminada!',
+                    'success'
+                )
             },
             ImportarDistanciaModal(){
                 $('#ImportarSitioModal').modal('show');

@@ -9,10 +9,12 @@
             </small>
         </div>
         <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-            <button @click="VerDetalles()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-            <detalles-component></detalles-component>
-            <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-            <button @click="EliminarRendicion()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
+  
+            <detalles-component :rendicion = rendicion.id></detalles-component>
+
+            <a href="#" @click="VerDetalles()" data-toggle="tooltip" data-placement="auto" title="Ver Detalles" ><i class="fas fa-eye text-info  fa-lg"></i></a><b> | </b>
+            <a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>
+            <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-primary fa-lg"></i></a>
         </div>
     </div>
 </template>
@@ -86,22 +88,13 @@
                     'info'
                 )
             },
-            EliminarRendicion(){
-
-
-
+            Eliminar(){
                 axios.delete('/rendicion/'+this.rendicion.id)
                     .then(()=>{
-                        // this.$emit('eliminar', this.index);
-                        console.log('Eliminado');
+                        this.$emit('eliminar', this.index);
                     }).catch(()=> {
                         swal("Error!", "Algo anda mal", "warning");
                 });
-                swal(
-                    'Eliminado!',
-                    'La distancia fue eliminada!',
-                    'success'
-                )
             },
             ImportarDistanciaModal(){
                 $('#ImportarSitioModal').modal('show');

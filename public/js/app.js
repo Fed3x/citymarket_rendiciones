@@ -2275,6 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['rendicion'],
   data: function data() {
     return {//   form:new Form({
       //         id: '',
@@ -2372,6 +2373,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2430,14 +2433,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       this.distancias.splice(index, 1, distancia);
       swal('Actualizado!', 'La distancia fue actualizada', 'info');
     },
-    EliminarRendicion: function EliminarRendicion() {
+    Eliminar: function Eliminar() {
+      var _this = this;
+
       axios["delete"]('/rendicion/' + this.rendicion.id).then(function () {
-        // this.$emit('eliminar', this.index);
-        console.log('Eliminado');
+        _this.$emit('eliminar', _this.index);
       })["catch"](function () {
         swal("Error!", "Algo anda mal", "warning");
       });
-      swal('Eliminado!', 'La distancia fue eliminada!', 'success');
     },
     ImportarDistanciaModal: function ImportarDistanciaModal() {
       $('#ImportarSitioModal').modal('show');
@@ -2460,6 +2463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -2578,8 +2582,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       this.distancias.splice(index, 1, distancia);
       swal('Actualizado!', 'La distancia fue actualizada', 'info');
     },
-    EliminarDistancia: function EliminarDistancia(index) {
-      this.distancias.splice(index, 1);
+    EliminarRendicion: function EliminarRendicion(index) {
+      this.rendiciones.splice(index, 1);
+      swal('Eliminado!', 'La distancia fue eliminada!', 'success');
     },
     ImportarDistanciaModal: function ImportarDistanciaModal() {
       $('#ImportarSitioModal').modal('show');
@@ -41577,48 +41582,62 @@ var render = function() {
         attrs: { role: "group" }
       },
       [
+        _c("detalles-component", { attrs: { rendicion: _vm.rendicion.id } }),
+        _vm._v(" "),
         _c(
-          "button",
+          "a",
           {
-            staticClass: "btn btn-primary",
-            attrs: { type: "button" },
+            attrs: {
+              href: "#",
+              "data-toggle": "tooltip",
+              "data-placement": "auto",
+              title: "Ver Detalles"
+            },
             on: {
               click: function($event) {
                 return _vm.VerDetalles()
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-eye" })]
+          [_c("i", { staticClass: "fas fa-eye text-info  fa-lg" })]
         ),
-        _vm._v(" "),
-        _c("detalles-component"),
+        _c("b", [_vm._v(" | ")]),
         _vm._v(" "),
         _c(
-          "button",
+          "a",
           {
-            staticClass: "btn btn-warning",
-            attrs: { type: "button" },
+            attrs: {
+              href: "#",
+              "data-toggle": "tooltip",
+              "data-placement": "auto",
+              title: "Modificar la distancia"
+            },
             on: {
               click: function($event) {
-                return _vm.ImportarDistanciaModal()
+                return _vm.Modificar()
               }
             }
           },
-          [_c("i", { staticClass: "far fa-file-pdf" })]
+          [_c("i", { staticClass: "far fa-file-pdf text-danger  fa-lg" })]
         ),
+        _c("b", [_vm._v(" | ")]),
         _vm._v(" "),
         _c(
-          "button",
+          "a",
           {
-            staticClass: "btn btn-danger",
-            attrs: { type: "button" },
+            attrs: {
+              href: "#",
+              "data-toggle": "tooltip",
+              "data-placement": "auto",
+              title: "Eliminar la distancia"
+            },
             on: {
               click: function($event) {
-                return _vm.EliminarRendicion()
+                return _vm.Eliminar()
               }
             }
           },
-          [_c("i", { staticClass: "far fa-trash-alt" })]
+          [_c("i", { staticClass: "fas fa-trash-alt text-primary fa-lg" })]
         )
       ],
       1
@@ -41867,7 +41886,12 @@ var render = function() {
             _vm._l(_vm.rendiciones, function(rendicion, index) {
               return _c("rendicion-component", {
                 key: rendicion.id,
-                attrs: { rendicion: rendicion, index: index }
+                attrs: { rendicion: rendicion, index: index },
+                on: {
+                  eliminar: function($event) {
+                    return _vm.EliminarRendicion(index)
+                  }
+                }
               })
             }),
             1

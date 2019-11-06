@@ -2011,127 +2011,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2150,63 +2035,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('v-select', vue_select__WEBPACK_IMPORTED_MODULE_1___default.a);
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_3__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["HasError"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['distancia', 'index', 'sitios'],
+  created: function created() {
+    if (this.distancia.id == null) {
+      this.Modificar();
+    }
+
+    EventBus.$on('modificando', function (index) {
+      if (this.index != index) {
+        this.modoEdicion = false;
+      }
+    }.bind(this));
+  },
   data: function data() {
     return {
-      form: new vform__WEBPACK_IMPORTED_MODULE_1__["Form"]({
-        id: '',
-        descripcion: ''
-      }),
-      sitios: [],
-      distancias: [],
-      rendiciones: [],
-      modoEdicion: false
+      modoEdicion: false,
+      draft: [{
+        id_sitio_desde: '',
+        id_sitio_hasta: '',
+        kilometraje: ''
+      }]
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/distancia').then(function (response) {
-      _this.distancias = response.data;
-    });
-    axios.get('/sitio').then(function (response) {
-      _this.sitios = response.data;
-    });
-  },
+  mounted: function mounted() {},
   methods: {
-    AgregarNuevaRendicion: function AgregarNuevaRendicion() {
-      this.modoEdicion = false;
-      this.form.reset();
-      $('#NuevaRendicionModal').modal('show');
+    Modificar: function Modificar() {
+      EventBus.$emit('modificando', this.index);
+      this.modoEdicion = true;
+      this.draft.id_sitio_desde = this.distancia.id_sitio_desde;
+      this.draft.id_sitio_hasta = this.distancia.id_sitio_hasta;
+      this.draft.kilometraje = this.distancia.kilometraje;
     },
-    NuevaRendicion: function NuevaRendicion() {
-      this.form.post('/rendicion').then(function (response) {
-        console.log(response); // const rendicion= response.data;
-        // this.rendiciones.push(rendicion);
-        // this.form.reset();
+    Actualizar: function Actualizar() {
+      var _this = this;
+
+      var parametros = {
+        id_sitio_desde: this.draft.id_sitio_desde,
+        id_sitio_hasta: this.draft.id_sitio_hasta,
+        kilometraje: this.draft.kilometraje
+      };
+      axios.put('/distancia/' + this.distancia.id, parametros).then(function (response) {
+        _this.modoEdicion = false;
+
+        _this.$emit('actualizar', response.data, _this.index);
+      })["catch"](function (error) {
+        swal("Error!", "Algo anda mal" + "\n" + error.response.data.message, "warning");
       });
     },
-    NuevaDistancia: function NuevaDistancia(distancia, index) {
-      this.distancias.splice(index, 1, distancia);
-      swal('Creado!', 'La distancia fue guardada!', 'success');
+    Agregar: function Agregar() {
+      var parametros = {
+        id_sitio_desde: this.draft.id_sitio_desde,
+        id_sitio_hasta: this.draft.id_sitio_hasta,
+        kilometraje: this.draft.kilometraje
+      };
+      console.log(parametros); // axios.post('/distancia', parametros)
+      //      .then((response) => {
+      //          this.modoEdicion = false;
+      //          this.$emit('nuevo', response.data, this.index);
+      // }).catch((error)=> {
+      //     swal("Error!", "Algo anda mal", "warning");
+      // });
     },
-    ImportarDistancia: function ImportarDistancia(distancia) {
-      for (var i in distancia) {
-        this.distancias.push(distancia[i]);
+    Eliminar: function Eliminar() {
+      var _this2 = this;
+
+      if (this.distancia.id != null) {
+        axios["delete"]('/distancia/' + this.distancia.id).then(function () {
+          _this2.$emit('eliminar', _this2.index);
+        })["catch"](function () {
+          swal("Error!", "Algo anda mal", "warning");
+        });
+      } else {
+        this.$emit('eliminar', this.index);
       }
-    },
-    ActualizarDistancia: function ActualizarDistancia(distancia, index) {
-      this.distancias.splice(index, 1, distancia);
-      swal('Actualizado!', 'La distancia fue actualizada', 'info');
-    },
-    EliminarDistancia: function EliminarDistancia(index) {
-      this.distancias.splice(index, 1);
-    },
-    ImportarDistanciaModal: function ImportarDistanciaModal() {
-      $('#ImportarSitioModal').modal('show');
+
+      swal('Eliminado!', 'La distancia fue eliminada!', 'success');
     }
   }
 });
@@ -2270,6 +2181,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2287,14 +2205,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       //     modoEdicion: false,
     };
   },
-  mounted: function mounted() {// axios.get('/distancia')
-    //      .then((response)=>{
-    //          this.distancias = response.data;
-    // });
-    // axios.get('/sitio')
-    // .then((response)=>{
-    //     this.sitios = response.data;
-    // });
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/rendicion_detalles/' + this.rendicion.id).then(function (response) {
+      console.log(response); //  this.distancias = response.data;
+    });
+    axios.get('/sitio').then(function (response) {
+      _this.sitios = response.data;
+    });
   },
   methods: {// AgregarNuevaRendicion(){
     //     this.modoEdicion = false;
@@ -40655,671 +40574,165 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "row justify-content-center",
-      staticStyle: { margin: "0px" }
-    },
-    [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card shadow p-3 mb-5 bg-white rounded" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Rendiciones\r\n\r\n                "),
-            _c(
-              "div",
-              {
-                staticClass: "btn-group",
-                staticStyle: { float: "right" },
-                attrs: { role: "group", "aria-label": "Basic example" }
-              },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.AgregarNuevaRendicion()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fab fa-rev" }),
-                    _vm._v(" Agregar Rendicion")
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade",
-                attrs: {
-                  id: "NuevaRendicionModal",
-                  tabindex: "-1",
-                  role: "dialog",
-                  "aria-labelledby": "NuevaRendicionModalLabel",
-                  "aria-hidden": "true"
+  return _c("tr", [
+    _c("th", [_vm._v(" " + _vm._s(_vm.index + 1))]),
+    _vm._v(" "),
+    _vm.modoEdicion
+      ? _c(
+          "td",
+          [
+            _c("v-select", {
+              attrs: {
+                label: "descripcion",
+                options: _vm.sitios,
+                reduce: function(sitios) {
+                  return sitios.id
                 }
               },
-              [
-                _c(
-                  "div",
-                  { staticClass: "modal-dialog", attrs: { role: "document" } },
-                  [
-                    _c("div", { staticClass: "modal-content" }, [
-                      _c(
-                        "form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              _vm.modoEdicion
-                                ? _vm.ActualizarRendicion()
-                                : _vm.NuevaRendicion()
-                            },
-                            keydown: function($event) {
-                              return _vm.form.onKeydown($event)
-                            }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "modal-header" }, [
-                            _vm.modoEdicion
-                              ? _c(
-                                  "h5",
-                                  {
-                                    staticClass: "modal-title",
-                                    attrs: { id: "NuevaRendicionModalLabel" }
-                                  },
-                                  [_vm._v("Modificar Rendicion")]
-                                )
-                              : _c(
-                                  "h5",
-                                  {
-                                    staticClass: "modal-title",
-                                    attrs: { id: "NuevaRendicionModalLabel" }
-                                  },
-                                  [_vm._v("Nueva Rendicion")]
-                                ),
-                            _vm._v(" "),
-                            _vm._m(0)
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "form-row" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.id,
-                                    expression: "form.id"
-                                  }
-                                ],
-                                attrs: { name: "id", type: "hidden" },
-                                domProps: { value: _vm.form.id },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.form,
-                                      "id",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-md-12" },
-                                [
-                                  _c("label", [_vm._v("Descripcion")]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.descripcion,
-                                        expression: "form.descripcion"
-                                      }
-                                    ],
-                                    staticClass: "form-control form-control-sm",
-                                    class: {
-                                      "is-invalid": _vm.form.errors.has(
-                                        "descripcion"
-                                      )
-                                    },
-                                    attrs: {
-                                      name: "descripcion",
-                                      type: "text",
-                                      placeholder: "Descripcion de la Rendicion"
-                                    },
-                                    domProps: { value: _vm.form.descripcion },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "descripcion",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("has-error", {
-                                    attrs: {
-                                      form: _vm.form,
-                                      field: "descripcion"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: {
-                                  type: "button",
-                                  "data-dismiss": "modal"
-                                }
-                              },
-                              [_vm._v("Cerrar")]
-                            ),
-                            _vm._v(" "),
-                            _vm.modoEdicion
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-primary",
-                                    attrs: { type: "submit" }
-                                  },
-                                  [_vm._v("Modificar")]
-                                )
-                              : _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-success",
-                                    attrs: { type: "submit" }
-                                  },
-                                  [_vm._v("Guardar")]
-                                )
-                          ])
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
+              model: {
+                value: _vm.draft.id_sitio_desde,
+                callback: function($$v) {
+                  _vm.$set(_vm.draft, "id_sitio_desde", $$v)
                 },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
+                expression: "draft.id_sitio_desde"
+              }
+            })
+          ],
+          1
+        )
+      : _c("td", [_vm._v(_vm._s(_vm.distancia.sitio_desde.descripcion))]),
+    _vm._v(" "),
+    _vm.modoEdicion
+      ? _c(
+          "td",
+          [
+            _c("v-select", {
+              attrs: {
+                label: "descripcion",
+                options: _vm.sitios,
+                reduce: function(sitios) {
+                  return sitios.id
+                }
+              },
+              model: {
+                value: _vm.draft.id_sitio_hasta,
+                callback: function($$v) {
+                  _vm.$set(_vm.draft, "id_sitio_hasta", $$v)
                 },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(4),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(5),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row alert alert-dark " }, [
-              _vm._m(6),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-6 my-auto",
-                  staticStyle: { "text-align": "end" },
-                  attrs: { role: "group" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ImportarDistanciaModal()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-file-pdf" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.AgregarDistancia()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-trash-alt" })]
-                  )
-                ]
-              )
-            ])
-          ])
+                expression: "draft.id_sitio_hasta"
+              }
+            })
+          ],
+          1
+        )
+      : _c("td", [_vm._v(_vm._s(_vm.distancia.sitio_hasta.descripcion))]),
+    _vm._v(" "),
+    _vm.modoEdicion
+      ? _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.draft.kilometraje,
+                expression: "draft.kilometraje"
+              }
+            ],
+            staticClass: "form-control form-control-sm",
+            attrs: { type: "text" },
+            domProps: { value: _vm.draft.kilometraje },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.draft, "kilometraje", $event.target.value)
+              }
+            }
+          })
         ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #1")])
-        ]),
-        _vm._v(" "),
-        _c("small", [
-          _vm._v(
-            "\r\n                    Fecha de Creacion: 30/10/2019 10:25\r\n                  "
+      : _c("td", [_vm._v(_vm._s(_vm.distancia.kilometraje))]),
+    _vm._v(" "),
+    _vm.modoEdicion
+      ? _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tooltip",
+                "data-placement": "auto",
+                title: "Guardar la distancia"
+              },
+              on: {
+                click: function($event) {
+                  _vm.distancia.id == null ? _vm.Agregar() : _vm.Actualizar()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-save text-primary fa-lg" })]
+          ),
+          _c("b", [_vm._v(" | ")]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tooltip",
+                "data-placement": "auto",
+                title: "Eliminar la distancia"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.Eliminar()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-trash-alt text-danger fa-lg" })]
           )
         ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #2")])
+      : _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tooltip",
+                "data-placement": "auto",
+                title: "Modificar la distancia"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.Modificar()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-edit text-success fa-lg" })]
+          ),
+          _c("b", [_vm._v(" | ")]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tooltip",
+                "data-placement": "auto",
+                title: "Eliminar la distancia"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.Eliminar()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-trash-alt text-danger fa-lg" })]
+          )
         ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #3")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-6 my-auto", attrs: { role: "alert" } },
-      [
-        _c("h5", { staticStyle: { margin: "0px" } }, [
-          _c("b", [_vm._v("Rendicion #4")])
-        ])
-      ]
-    )
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41362,6 +40775,37 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "btn-group",
+                  staticStyle: { float: "right" },
+                  attrs: { role: "group", "aria-label": "Basic example" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarDistancia()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-map-signs" }),
+                      _vm._v(" Agregar Distancia")
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c(
                   "table",

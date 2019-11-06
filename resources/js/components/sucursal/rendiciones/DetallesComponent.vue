@@ -5,11 +5,18 @@
             <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="DetallesRendicionModalLabel">Detalles</h5>
+                        
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        
                     </div>
                     <div class="modal-body">
+                        <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
+                           <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Distancia</button>
+                        </div>
+                        <br>
+                        <br>
                         <div class="table-responsive">
                             <table class="table table-hover table-sm table-borderless">
                                     <thead class="">
@@ -63,15 +70,15 @@
             }
         },
         mounted() {
-            // axios.get('/distancia')
-            //      .then((response)=>{
-                     
-            //          this.distancias = response.data;
-            // });
-            // axios.get('/sitio')
-            // .then((response)=>{
-            //     this.sitios = response.data;
-            // });
+            axios.get('/rendicion_detalles/' + this.rendicion.id )
+                 .then((response)=>{
+                     console.log(response);
+                    //  this.distancias = response.data;
+            });
+            axios.get('/sitio')
+            .then((response)=>{
+                this.sitios = response.data;
+            });
         },
         methods: {
             // AgregarNuevaRendicion(){

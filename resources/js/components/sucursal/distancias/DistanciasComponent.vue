@@ -2,7 +2,7 @@
 <div class="row justify-content-center" style="margin: 0px">
     <div class="col-md-8">
         <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-header">Distancias entre Sitios
+            <div class="card-header">Distancias entre Sitios
 
                 <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
                     <a href="/distancia/export" type="button" class="btn btn-success" data-toggle="tooltip" data-placement="auto" title="Exportar Distancias a Excel" ><i class="fas fa-download"></i> Exportar - EXCEL</a>

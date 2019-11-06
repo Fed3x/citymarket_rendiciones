@@ -1,211 +1,119 @@
 <template>
-<div class="row justify-content-center" style="margin: 0px">
-    <div class="col-md-8">
-        <div class="card shadow p-3 mb-5 bg-white rounded">
-            <div class="card-header">Rendiciones
-
-                <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
-                <button @click="AgregarNuevaRendicion()" class="btn btn-primary" type="button"><i class="fab fa-rev"></i> Agregar Rendicion</button>
-                </div>
-                <div class="modal fade" id="NuevaRendicionModal" tabindex="-1" role="dialog"
-                    aria-labelledby="NuevaRendicionModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                             <form @submit.prevent="modoEdicion ? ActualizarRendicion() : NuevaRendicion()" @keydown="form.onKeydown($event)" > 
-                                <div class="modal-header">
-                                    <h5 v-if="modoEdicion" class="modal-title" id="NuevaRendicionModalLabel">Modificar Rendicion</h5>
-                                    <h5 v-else class="modal-title" id="NuevaRendicionModalLabel">Nueva Rendicion</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                
-                                <div class="modal-body">
-                                    <div class="form-row">
-                                        <input v-model="form.id" name="id" type="hidden">
-                                        <div class="form-group col-md-12">
-                                            <label>Descripcion</label>
-                                            <input v-model="form.descripcion"
-                                                    name="descripcion"
-                                                    type="text" 
-                                                    class="form-control form-control-sm"
-                                                    placeholder="Descripcion de la Rendicion"
-                                                    :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                                                    >
-                                                    <has-error :form="form" field="descripcion"></has-error>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                    <button v-if="modoEdicion" type="submit" class="btn btn-primary">Modificar</button>
-                                    <button v-else type="submit" class="btn btn-success">Guardar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body">
-              <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #1</b></h5>
-                  <small >
-                    Fecha de Creacion: 30/10/2019 10:25
-                  </small>
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #3</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #2</b></h5>
-
-                </div>
-                
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-                <div class="row alert alert-dark ">
-                    <div class="col-md-6 my-auto" role="alert">
-
-                   <h5 style="margin: 0px"><b>Rendicion #4</b></h5>
-
-                </div>
-                  <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
-                    <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-eye"></i></button>
-                    <button @click="ImportarDistanciaModal()" type="button" class="btn btn-warning"><i class="far fa-file-pdf"></i></button>
-                    <button @click="AgregarDistancia()" class="btn btn-danger" type="button"><i class="far fa-trash-alt"></i></button>
-                  </div>
-              </div>
-            </div>
-        </div>
-    </div>
-</div> 
+    <tr>
+        <th > {{index+1}}</th>
+        <td v-if="modoEdicion"><v-select v-model="draft.id_sitio_desde" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
+        <td v-else>{{distancia.sitio_desde.descripcion}}</td>
+        <td v-if="modoEdicion">
+        <v-select v-model="draft.id_sitio_hasta" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select>        
+        </td>
+        <td v-else>{{distancia.sitio_hasta.descripcion}}</td>
+        <td v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.kilometraje"></td>
+        <td v-else>{{distancia.kilometraje}}</td>
+        
+        <td v-if="modoEdicion"><a href="#" v-on:click="distancia.id == null ? Agregar():Actualizar()" data-toggle="tooltip" data-placement="auto" title="Guardar la distancia" ><i class="fas fa-save text-primary fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
+        <td v-else><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
+        
+    </tr> 
 </template>
 <script>
-    import Vue from 'vue' 
+    import Vue from 'vue'
+    var EventBus = new Vue
+
+    import vSelect from 'vue-select'
+
+    Vue.component('v-select', vSelect)
+    import 'vue-select/dist/vue-select.css';
+
+    
     import { Form, HasError, AlertError } from 'vform'
 
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
+        props: ['distancia','index','sitios'],
+        created: function() {
+            if (this.distancia.id == null){
+                this.Modificar();
+            }
+            EventBus.$on('modificando', function(index){
+                if (this.index != index){
+                    this.modoEdicion = false;
+                }
+            }.bind(this));
+        },
         data(){
             return{
-              form:new Form({
-                    id: '',
-                    descripcion: '',
-                }),
-                sitios:[],
-                distancias:[],
-                rendiciones:[],
                 modoEdicion: false,
+                draft:[{
+                    id_sitio_desde: '',
+                    id_sitio_hasta: '',
+                    kilometraje: ''
+                }],
             }
         },
         mounted() {
-            axios.get('/distancia')
-                 .then((response)=>{
-                     
-                     this.distancias = response.data;
-            });
-            axios.get('/sitio')
-            .then((response)=>{
-                this.sitios = response.data;
-            });
+
         },
         methods: {
-            AgregarNuevaRendicion(){
-                this.modoEdicion = false;
-                this.form.reset();
-                $('#NuevaRendicionModal').modal('show');
+            Modificar(){
+                EventBus.$emit('modificando', this.index);
+                this.modoEdicion = true;
+                this.draft.id_sitio_desde = this.distancia.id_sitio_desde;
+                this.draft.id_sitio_hasta = this.distancia.id_sitio_hasta;
+                this.draft.kilometraje = this.distancia.kilometraje;
             },
-            NuevaRendicion(){
-                this.form.post('/rendicion')
-                     .then((response) => {
-                         console.log(response);
-                        // const rendicion= response.data;
-                        // this.rendiciones.push(rendicion);
-                        // this.form.reset();
-                     });
+            Actualizar(){
+                const parametros = {
+                    id_sitio_desde: this.draft.id_sitio_desde,
+                    id_sitio_hasta: this.draft.id_sitio_hasta,
+                    kilometraje: this.draft.kilometraje
+                };
                 
+                axios.put('/distancia/'+this.distancia.id, parametros)
+                    .then((response)=>{
+                        this.modoEdicion = false;
+                        this.$emit('actualizar', response.data, this.index);
+                    })
+                    .catch((error)=>{
+                        swal("Error!", "Algo anda mal" +"\n" + error.response.data.message, "warning");
+                    });
             },
-            NuevaDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
+            Agregar(){
+                const parametros = {
+                    id_sitio_desde: this.draft.id_sitio_desde,
+                    id_sitio_hasta: this.draft.id_sitio_hasta,
+                    kilometraje: this.draft.kilometraje
+                };
+                console.log(parametros);
+                
+                // axios.post('/distancia', parametros)
+                //      .then((response) => {
+                //          this.modoEdicion = false;
+                //          this.$emit('nuevo', response.data, this.index);
+                    
+                // }).catch((error)=> {
+                    
+                //     swal("Error!", "Algo anda mal", "warning");
+                // });
+            },
+            Eliminar(){
+                if (this.distancia.id != null){
+
+                    axios.delete('/distancia/'+this.distancia.id)
+                    .then(()=>{
+                        this.$emit('eliminar', this.index);
+
+                    }).catch(()=> {
+                        swal("Error!", "Algo anda mal", "warning");
+                });
+                }else{
+                    this.$emit('eliminar', this.index);
+                }
                 swal(
-                    'Creado!',
-                    'La distancia fue guardada!',
+                    'Eliminado!',
+                    'La distancia fue eliminada!',
                     'success'
                 )
-            },
-            ImportarDistancia(distancia){
-                for (let i in distancia){
-                     this.distancias.push(distancia[i]);
-                }
-            },
-            ActualizarDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
-                swal(
-                    'Actualizado!',
-                    'La distancia fue actualizada',
-                    'info'
-                )
-            },
-            EliminarDistancia(index){
-                this.distancias.splice(index,1);
-            },
-            ImportarDistanciaModal(){
-                $('#ImportarSitioModal').modal('show');
             },
         }
       

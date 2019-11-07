@@ -2032,8 +2032,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 
@@ -2043,9 +2041,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('v-select', vue_select__WEB
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_3__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["HasError"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['distancia', 'index', 'sitios'],
+  props: ['detalle_rendicion', 'index', 'sitios'],
   created: function created() {
-    if (this.distancia.id == null) {
+    if (this.detalle_rendicion.id == null) {
       this.Modificar();
     }
 
@@ -2070,9 +2068,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     Modificar: function Modificar() {
       EventBus.$emit('modificando', this.index);
       this.modoEdicion = true;
-      this.draft.id_sitio_desde = this.distancia.id_sitio_desde;
-      this.draft.id_sitio_hasta = this.distancia.id_sitio_hasta;
-      this.draft.kilometraje = this.distancia.kilometraje;
+      this.draft.id_sitio_desde = this.detalle_rendicion.id_sitio_desde;
+      this.draft.id_sitio_hasta = this.detalle_rendicion.id_sitio_hasta;
+      this.draft.kilometraje = this.detalle_rendicion.kilometraje;
     },
     Actualizar: function Actualizar() {
       var _this = this;
@@ -2082,7 +2080,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         id_sitio_hasta: this.draft.id_sitio_hasta,
         kilometraje: this.draft.kilometraje
       };
-      axios.put('/distancia/' + this.distancia.id, parametros).then(function (response) {
+      axios.put('/distancia/' + this.detalle_rendicion.id, parametros).then(function (response) {
         _this.modoEdicion = false;
 
         _this.$emit('actualizar', response.data, _this.index);
@@ -2188,6 +2186,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2195,67 +2195,39 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['rendicion'],
   data: function data() {
-    return {//   form:new Form({
+    return {
+      detalles_rendicion: [],
+      //   form:new Form({
       //         id: '',
       //         descripcion: '',
       //     }),
-      //     sitios:[],
-      //     distancias:[],
+      sitios: [] //     distancias:[],
       //     rendiciones:[],
       //     modoEdicion: false,
+
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/rendicion_detalles/' + this.rendicion.id).then(function (response) {
-      console.log(response); //  this.distancias = response.data;
+      console.log(response);
+      _this.detalles_rendicion = response.data;
     });
     axios.get('/sitio').then(function (response) {
       _this.sitios = response.data;
     });
   },
-  methods: {// AgregarNuevaRendicion(){
-    //     this.modoEdicion = false;
-    //     this.form.reset();
-    //     $('#NuevaRendicionModal').modal('show');
-    // },
-    // NuevaRendicion(){
-    //     this.form.post('/rendicion')
-    //          .then((response) => {
-    //              console.log(response);
-    //             // const rendicion= response.data;
-    //             // this.rendiciones.push(rendicion);
-    //             // this.form.reset();
-    //          });
-    // },
-    // NuevaDistancia(distancia, index){
-    //     this.distancias.splice(index, 1, distancia);
-    //     swal(
-    //         'Creado!',
-    //         'La distancia fue guardada!',
-    //         'success'
-    //     )
-    // },
-    // ImportarDistancia(distancia){
-    //     for (let i in distancia){
-    //          this.distancias.push(distancia[i]);
-    //     }
-    // },
-    // ActualizarDistancia(distancia, index){
-    //     this.distancias.splice(index, 1, distancia);
-    //     swal(
-    //         'Actualizado!',
-    //         'La distancia fue actualizada',
-    //         'info'
-    //     )
-    // },
-    // EliminarDistancia(index){
-    //     this.distancias.splice(index,1);
-    // },
-    // ImportarDistanciaModal(){
-    //     $('#ImportarSitioModal').modal('show');
-    // },
+  methods: {
+    AgregarDetalle: function AgregarDetalle() {
+      this.detalles_rendicion.push({
+        id_sitio_desde: '',
+        id_sitio_hasta: '',
+        kilometraje: '0',
+        sitio_desde: '',
+        sitio_hasta: ''
+      });
+    }
   }
 });
 
@@ -40580,6 +40552,7 @@ var render = function() {
     _vm.modoEdicion
       ? _c(
           "td",
+          { staticClass: "col-sm-4 text-center" },
           [
             _c("v-select", {
               attrs: {
@@ -40600,11 +40573,14 @@ var render = function() {
           ],
           1
         )
-      : _c("td", [_vm._v(_vm._s(_vm.distancia.sitio_desde.descripcion))]),
+      : _c("td", { staticClass: "col-sm-4 text-center" }, [
+          _vm._v(_vm._s(_vm.detalle_rendicion.sitio_desde.descripcion))
+        ]),
     _vm._v(" "),
     _vm.modoEdicion
       ? _c(
           "td",
+          { staticClass: "col-sm-4 text-center" },
           [
             _c("v-select", {
               attrs: {
@@ -40625,10 +40601,12 @@ var render = function() {
           ],
           1
         )
-      : _c("td", [_vm._v(_vm._s(_vm.distancia.sitio_hasta.descripcion))]),
+      : _c("td", { staticClass: "col-sm-4 text-center" }, [
+          _vm._v(_vm._s(_vm.detalle_rendicion.sitio_hasta.descripcion))
+        ]),
     _vm._v(" "),
     _vm.modoEdicion
-      ? _c("td", [
+      ? _c("td", { staticClass: "col-sm-2 text-center" }, [
           _c("input", {
             directives: [
               {
@@ -40651,10 +40629,12 @@ var render = function() {
             }
           })
         ])
-      : _c("td", [_vm._v(_vm._s(_vm.distancia.kilometraje))]),
+      : _c("td", { staticClass: "col-sm-2 text-center" }, [
+          _vm._v(_vm._s(_vm.detalle_rendicion.kilometraje))
+        ]),
     _vm._v(" "),
     _vm.modoEdicion
-      ? _c("td", [
+      ? _c("td", { staticClass: "col-sm-2 text-center" }, [
           _c(
             "a",
             {
@@ -40666,7 +40646,9 @@ var render = function() {
               },
               on: {
                 click: function($event) {
-                  _vm.distancia.id == null ? _vm.Agregar() : _vm.Actualizar()
+                  _vm.detalle_rendicion.id == null
+                    ? _vm.Agregar()
+                    : _vm.Actualizar()
                 }
               }
             },
@@ -40692,7 +40674,7 @@ var render = function() {
             [_c("i", { staticClass: "fas fa-trash-alt text-danger fa-lg" })]
           )
         ])
-      : _c("td", [
+      : _c("td", { staticClass: "col-sm-2 text-center" }, [
           _c(
             "a",
             {
@@ -40790,7 +40772,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.AgregarDistancia()
+                          return _vm.AgregarDetalle()
                         }
                       }
                     },
@@ -40815,65 +40797,46 @@ var render = function() {
                   [
                     _vm._m(1),
                     _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("th", [_vm._v(" 1 ")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("CASA DE FEDE")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("OFICINA - CENTRAL")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("18.5")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#",
-                                "data-toggle": "tooltip",
-                                "data-placement": "auto",
-                                title: "Modificar la distancia"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.Modificar()
-                                }
-                              }
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.detalles_rendicion, function(
+                        detalle_rendicion,
+                        index
+                      ) {
+                        return _c("detalle-component", {
+                          key: detalle_rendicion.id,
+                          attrs: {
+                            detalle_rendicion: detalle_rendicion,
+                            index: index,
+                            sitios: _vm.sitios
+                          },
+                          on: {
+                            nuevo: function($event) {
+                              var i = arguments.length,
+                                argsArray = Array(i)
+                              while (i--) argsArray[i] = arguments[i]
+                              return _vm.NuevaDistancia.apply(
+                                void 0,
+                                argsArray.concat([index])
+                              )
                             },
-                            [
-                              _c("i", {
-                                staticClass: "fas fa-edit text-success fa-lg"
-                              })
-                            ]
-                          ),
-                          _c("b", [_vm._v(" | ")]),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#",
-                                "data-toggle": "tooltip",
-                                "data-placement": "auto",
-                                title: "Eliminar la distancia"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.Eliminar()
-                                }
-                              }
+                            actualizar: function($event) {
+                              var i = arguments.length,
+                                argsArray = Array(i)
+                              while (i--) argsArray[i] = arguments[i]
+                              return _vm.ActualizarDistancia.apply(
+                                void 0,
+                                argsArray.concat([index])
+                              )
                             },
-                            [
-                              _c("i", {
-                                staticClass:
-                                  "fas fa-trash-alt text-danger fa-lg"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
+                            eliminar: function($event) {
+                              return _vm.EliminarDistancia(index)
+                            }
+                          }
+                        })
+                      }),
+                      1
+                    )
                   ]
                 )
               ])
@@ -40950,19 +40913,29 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { staticClass: "col-sm-4", attrs: { scope: "col" } }, [
-          _vm._v("Sitio Desde")
-        ]),
+        _c(
+          "th",
+          { staticClass: "col-sm-4 text-center", attrs: { scope: "col" } },
+          [_vm._v("Sitio Desde")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "col-sm-4", attrs: { scope: "col" } }, [
-          _vm._v("Sitio Hasta")
-        ]),
+        _c(
+          "th",
+          { staticClass: "col-sm-4 text-center", attrs: { scope: "col" } },
+          [_vm._v("Sitio Hasta")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "col-sm-1", attrs: { scope: "col" } }, [
-          _vm._v("Kilometraje")
-        ]),
+        _c(
+          "th",
+          { staticClass: "col-sm-2 text-center", attrs: { scope: "col" } },
+          [_vm._v("Kilometraje")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Accion")])
+        _c(
+          "th",
+          { staticClass: "col-sm-2 text-center", attrs: { scope: "col" } },
+          [_vm._v("Accion")]
+        )
       ])
     ])
   }
@@ -41026,7 +40999,7 @@ var render = function() {
         attrs: { role: "group" }
       },
       [
-        _c("detalles-component", { attrs: { rendicion: _vm.rendicion.id } }),
+        _c("detalles-component", { attrs: { rendicion: _vm.rendicion } }),
         _vm._v(" "),
         _c(
           "a",

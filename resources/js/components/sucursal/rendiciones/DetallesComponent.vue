@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
-                           <button @click="AgregarDistancia()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Distancia</button>
+                           <button @click="AgregarDetalle()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Distancia</button>
                         </div>
                         <br>
                         <br>
@@ -22,20 +22,22 @@
                                     <thead class="">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col" class="col-sm-4">Sitio Desde</th>
-                                            <th scope="col" class="col-sm-4">Sitio Hasta</th>
-                                            <th scope="col" class="col-sm-1">Kilometraje</th>
-                                            <th scope="col" >Accion</th>
+                                            <th scope="col" class="col-sm-4 text-center">Sitio Desde</th>
+                                            <th scope="col" class="col-sm-4 text-center">Sitio Hasta</th>
+                                            <th scope="col" class="col-sm-2 text-center">Kilometraje</th>
+                                            <th scope="col" class="col-sm-2 text-center">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <tr>
-                                            <th > 1 </th>
-                                            <td>CASA DE FEDE</td>
-                                            <td>OFICINA - CENTRAL</td>
-                                            <td >18.5</td>
-                                            <td><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
-                                        </tr> 
+                                        <detalle-component v-for="(detalle_rendicion, index) in detalles_rendicion" 
+                                            :key="detalle_rendicion.id" 
+                                            :detalle_rendicion="detalle_rendicion" 
+                                            :index="index"
+                                            :sitios="sitios"
+                                            @nuevo="NuevaDistancia(...arguments, index)"
+                                            @actualizar="ActualizarDistancia(...arguments, index)"
+                                            @eliminar="EliminarDistancia(index)">
+                                        </detalle-component> 
                                     </tbody>
                             </table>
                         </div>
@@ -59,21 +61,22 @@
         props:['rendicion'],
         data(){
             return{
+                detalles_rendicion:[],
             //   form:new Form({
             //         id: '',
             //         descripcion: '',
             //     }),
-            //     sitios:[],
+                 sitios:[],
             //     distancias:[],
             //     rendiciones:[],
             //     modoEdicion: false,
             }
         },
         mounted() {
-            axios.get('/rendicion_detalles/' + this.rendicion.id )
+            axios.get('/rendicion_detalles/' + this.rendicion.id)
                  .then((response)=>{
                      console.log(response);
-                    //  this.distancias = response.data;
+                     this.detalles_rendicion = response.data;
             });
             axios.get('/sitio')
             .then((response)=>{
@@ -81,6 +84,15 @@
             });
         },
         methods: {
+            AgregarDetalle(){
+                this.detalles_rendicion.push({id_sitio_desde: '',
+                    id_sitio_hasta: '',
+                    kilometraje: '0',
+                    sitio_desde: '',
+                    sitio_hasta: ''
+                        }
+                    );
+            },
             // AgregarNuevaRendicion(){
             //     this.modoEdicion = false;
             //     this.form.reset();

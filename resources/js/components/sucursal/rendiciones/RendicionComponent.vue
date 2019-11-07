@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
   
-            <detalles-component :rendicion = rendicion.id></detalles-component>
+            <detalles-component :rendicion = rendicion></detalles-component>
 
             <a href="#" @click="VerDetalles()" data-toggle="tooltip" data-placement="auto" title="Ver Detalles" ><i class="fas fa-eye text-info  fa-lg"></i></a><b> | </b>
             <a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>

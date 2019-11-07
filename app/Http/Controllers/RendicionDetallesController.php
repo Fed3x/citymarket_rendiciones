@@ -25,7 +25,10 @@ class RendicionDetallesController extends Controller
     public function show($id)
     {
         $detalles = DetalleRendicion::where('id_rendicion', $id)->get();
-        return $detalles;
+        return $detalles->each(function ($detalle){
+            $detalle->sitio_desde;
+            $detalle->sitio_hasta;
+        });
     }
 
     public function update(Request $request, $id)

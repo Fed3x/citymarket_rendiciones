@@ -18,4 +18,15 @@ class DetalleRendicion extends Model
     }
 
     public $timestamps = false; 
+
+    
+    public function sitio_desde()
+    {
+       return $this->belongsTo('App\Sitio', 'id_sitio_desde', 'id');
+    }
+
+    public function sitio_hasta()
+    {
+       return $this->belongsTo('App\Sitio', 'id_sitio_hasta', 'id');
+    }
 }

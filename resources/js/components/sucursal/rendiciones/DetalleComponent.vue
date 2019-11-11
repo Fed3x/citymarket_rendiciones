@@ -7,7 +7,6 @@
         <td  class="col-sm-4 text-center" v-else>{{detalle_rendicion.sitio_hasta.descripcion}}</td>
         <td  class="col-sm-2 text-center" v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.kilometraje"></td>
         <td  class="col-sm-2 text-center" v-else>{{detalle_rendicion.kilometraje}}</td>
-        
         <td  class="col-sm-2 text-center" v-if="modoEdicion"><a href="#" v-on:click="detalle_rendicion.id == null ? Agregar():Actualizar()" data-toggle="tooltip" data-placement="auto" title="Guardar la distancia" ><i class="fas fa-save text-primary fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
         <td  class="col-sm-2 text-center" v-else><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
         
@@ -67,7 +66,7 @@
                     kilometraje: this.draft.kilometraje
                 };
                 
-                axios.put('/distancia/'+this.detalle_rendicion.id, parametros)
+                axios.put('/rendicion_detalles/'+this.detalle_rendicion.id, parametros)
                     .then((response)=>{
                         this.modoEdicion = false;
                         this.$emit('actualizar', response.data, this.index);

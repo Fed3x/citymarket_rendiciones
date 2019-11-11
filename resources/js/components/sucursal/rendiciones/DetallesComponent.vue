@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
-                           <button @click="AgregarDetalle()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Distancia</button>
+                           <button @click="AgregarDetalle()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Detalle</button>
                         </div>
                         <br>
                         <br>
@@ -35,7 +35,7 @@
                                             :index="index"
                                             :sitios="sitios"
                                             @nuevo="NuevaDistancia(...arguments, index)"
-                                            @actualizar="ActualizarDistancia(...arguments, index)"
+                                            @actualizar="ActualizarDetalle(...arguments, index)"
                                             @eliminar="EliminarDistancia(index)">
                                         </detalle-component> 
                                     </tbody>
@@ -44,8 +44,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        <button v-if="modoEdicion" type="submit" class="btn btn-primary">Modificar</button>
-                        <button v-else type="submit" class="btn btn-success">Guardar</button>
                     </div>
             </div>
         </div>
@@ -62,14 +60,7 @@
         data(){
             return{
                 detalles_rendicion:[],
-            //   form:new Form({
-            //         id: '',
-            //         descripcion: '',
-            //     }),
-                 sitios:[],
-            //     distancias:[],
-            //     rendiciones:[],
-            //     modoEdicion: false,
+                sitios:[],
             }
         },
         mounted() {
@@ -121,14 +112,14 @@
             //          this.distancias.push(distancia[i]);
             //     }
             // },
-            // ActualizarDistancia(distancia, index){
-            //     this.distancias.splice(index, 1, distancia);
-            //     swal(
-            //         'Actualizado!',
-            //         'La distancia fue actualizada',
-            //         'info'
-            //     )
-            // },
+            ActualizarDetalle(detalle_rendicion, index){
+                this.detalles_rendicion.splice(index, 1, detalle_rendicion);
+                swal(
+                    'Actualizado!',
+                    'La distancia fue actualizada',
+                    'info'
+                )
+            },
             // EliminarDistancia(index){
             //     this.distancias.splice(index,1);
             // },

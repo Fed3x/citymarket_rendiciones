@@ -60,6 +60,7 @@
                         }
                     }
                     ).then((response) => {
+                    // console.log(response.data);
                     this.$emit('importar', response.data);
                     })
                     .catch((error)=> {

@@ -9,7 +9,7 @@ class Distancia extends Model
     protected $table= 'org_distancias';
 
     protected $fillable = [
-    'id_sitio_desde', 'id_sitio_hasta','kilometraje'
+    'id_sitio_desde', 'id_sitio_hasta','kilometraje', 'creado_por', 'creado_el'
     ];
     
 

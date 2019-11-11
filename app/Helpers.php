@@ -2,5 +2,6 @@
  
 function getID($model, $column, $value)
 {
-    return  $model::where($column, $value)->first()->id;
+    $data =  $model::where($column, $value)->first()->id;
+    return $data;
 }

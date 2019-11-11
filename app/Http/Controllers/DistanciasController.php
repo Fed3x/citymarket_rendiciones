@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Imports\DistanciasImport;
 use App\Exports\DistanciasExport;
 use Excel;
+use Auth;
 
 
 class DistanciasController extends Controller
@@ -30,6 +31,8 @@ class DistanciasController extends Controller
         $distancia->id_sitio_desde = $request->id_sitio_desde;
         $distancia->id_sitio_hasta = $request->id_sitio_hasta;
         $distancia->kilometraje = $request->kilometraje;
+        $distancia->creado_el = Carbon::now();
+        $distancia->creado_por = Auth::user()->usuario;
         $distancia->save();
         $id = $distancia->id;
 

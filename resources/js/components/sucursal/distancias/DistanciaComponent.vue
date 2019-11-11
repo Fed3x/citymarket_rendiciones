@@ -84,17 +84,15 @@
                     id_sitio_hasta: this.draft.id_sitio_hasta,
                     kilometraje: this.draft.kilometraje
                 };
-                console.log(parametros);
-                
-                // axios.post('/distancia', parametros)
-                //      .then((response) => {
-                //          this.modoEdicion = false;
-                //          this.$emit('nuevo', response.data, this.index);
+                axios.post('/distancia', parametros)
+                     .then((response) => {
+                         this.modoEdicion = false;
+                         this.$emit('nuevo', response.data, this.index);
                     
-                // }).catch((error)=> {
+                }).catch((error)=> {
                     
-                //     swal("Error!", "Algo anda mal", "warning");
-                // });
+                    swal("Error!", "Algo anda mal", "warning");
+                });
             },
             Eliminar(){
                 if (this.distancia.id != null){

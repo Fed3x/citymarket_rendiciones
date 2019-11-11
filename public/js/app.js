@@ -1779,25 +1779,27 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       });
     },
     Agregar: function Agregar() {
+      var _this2 = this;
+
       var parametros = {
         id_sitio_desde: this.draft.id_sitio_desde,
         id_sitio_hasta: this.draft.id_sitio_hasta,
         kilometraje: this.draft.kilometraje
       };
-      console.log(parametros); // axios.post('/distancia', parametros)
-      //      .then((response) => {
-      //          this.modoEdicion = false;
-      //          this.$emit('nuevo', response.data, this.index);
-      // }).catch((error)=> {
-      //     swal("Error!", "Algo anda mal", "warning");
-      // });
+      axios.post('/distancia', parametros).then(function (response) {
+        _this2.modoEdicion = false;
+
+        _this2.$emit('nuevo', response.data, _this2.index);
+      })["catch"](function (error) {
+        swal("Error!", "Algo anda mal", "warning");
+      });
     },
     Eliminar: function Eliminar() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.distancia.id != null) {
         axios["delete"]('/distancia/' + this.distancia.id).then(function () {
-          _this2.$emit('eliminar', _this2.index);
+          _this3.$emit('eliminar', _this3.index);
         })["catch"](function () {
           swal("Error!", "Algo anda mal", "warning");
         });
@@ -1990,6 +1992,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
+        // console.log(response.data);
         _this.$emit('importar', response.data);
       })["catch"](function (error) {
         console.log(error.data);
@@ -2017,7 +2020,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_3__);
-//
 //
 //
 //
@@ -2080,7 +2082,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         id_sitio_hasta: this.draft.id_sitio_hasta,
         kilometraje: this.draft.kilometraje
       };
-      axios.put('/distancia/' + this.detalle_rendicion.id, parametros).then(function (response) {
+      axios.put('/rendicion_detalles/' + this.detalle_rendicion.id, parametros).then(function (response) {
         _this.modoEdicion = false;
 
         _this.$emit('actualizar', response.data, _this.index);
@@ -2186,8 +2188,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2197,14 +2197,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
   data: function data() {
     return {
       detalles_rendicion: [],
-      //   form:new Form({
-      //         id: '',
-      //         descripcion: '',
-      //     }),
-      sitios: [] //     distancias:[],
-      //     rendiciones:[],
-      //     modoEdicion: false,
-
+      sitios: []
     };
   },
   mounted: function mounted() {
@@ -2227,6 +2220,37 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         sitio_desde: '',
         sitio_hasta: ''
       });
+    },
+    // AgregarNuevaRendicion(){
+    //     this.modoEdicion = false;
+    //     this.form.reset();
+    //     $('#NuevaRendicionModal').modal('show');
+    // },
+    // NuevaRendicion(){
+    //     this.form.post('/rendicion')
+    //          .then((response) => {
+    //              console.log(response);
+    //             // const rendicion= response.data;
+    //             // this.rendiciones.push(rendicion);
+    //             // this.form.reset();
+    //          });
+    // },
+    // NuevaDistancia(distancia, index){
+    //     this.distancias.splice(index, 1, distancia);
+    //     swal(
+    //         'Creado!',
+    //         'La distancia fue guardada!',
+    //         'success'
+    //     )
+    // },
+    // ImportarDistancia(distancia){
+    //     for (let i in distancia){
+    //          this.distancias.push(distancia[i]);
+    //     }
+    // },
+    ActualizarDetalle: function ActualizarDetalle(detalle_rendicion, index) {
+      this.detalles_rendicion.splice(index, 1, detalle_rendicion);
+      swal('Actualizado!', 'La distancia fue actualizada', 'info');
     }
   }
 });
@@ -2273,16 +2297,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['rendicion'],
   data: function data() {
-    return {//   form:new Form({
+    return {
+      detalles_rendicion: [],
+      sitios: [],
+      vacio: "" //   form:new Form({
       //         id: '',
       //         descripcion: '',
       //     }),
       //     distancias:[],
       //     modoEdicion: false,
+
     };
   },
-  mounted: function mounted() {
-    console.log(this.rendicion); // axios.get('/distancia')
+  mounted: function mounted() {// console.log(this.rendicion);
+    // axios.get('/distancia')
     //      .then((response)=>{
     //          this.distancias = response.data;
     // });
@@ -2305,6 +2333,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       });
     },
     VerDetalles: function VerDetalles() {
+      var _this = this;
+
+      this.detalles_rendicion = this.detalles_rendicion.splice(); // console.log(this.detalles_rendicion);
+
+      axios.get('/rendicion_detalles/' + this.rendicion.id).then(function (response) {
+        console.log(response);
+
+        _this.detalles_rendicion.push(response.data);
+      });
       $('#DetallesRendicionModal').modal({
         show: true,
         keyboard: false,
@@ -2325,10 +2362,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       swal('Actualizado!', 'La distancia fue actualizada', 'info');
     },
     Eliminar: function Eliminar() {
-      var _this = this;
+      var _this2 = this;
 
       axios["delete"]('/rendicion/' + this.rendicion.id).then(function () {
-        _this.$emit('eliminar', _this.index);
+        _this2.$emit('eliminar', _this2.index);
       })["catch"](function () {
         swal("Error!", "Algo anda mal", "warning");
       });
@@ -40778,7 +40815,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-map-signs" }),
-                      _vm._v(" Agregar Distancia")
+                      _vm._v(" Agregar Detalle")
                     ]
                   )
                 ]
@@ -40824,7 +40861,7 @@ var render = function() {
                               var i = arguments.length,
                                 argsArray = Array(i)
                               while (i--) argsArray[i] = arguments[i]
-                              return _vm.ActualizarDistancia.apply(
+                              return _vm.ActualizarDetalle.apply(
                                 void 0,
                                 argsArray.concat([index])
                               )
@@ -40842,34 +40879,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v("Cerrar")]
-              ),
-              _vm._v(" "),
-              _vm.modoEdicion
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Modificar")]
-                  )
-                : _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Guardar")]
-                  )
-            ])
+            _vm._m(2)
           ])
         ]
       )
@@ -40938,6 +40948,21 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Cerrar")]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -40999,8 +41024,6 @@ var render = function() {
         attrs: { role: "group" }
       },
       [
-        _c("detalles-component", { attrs: { rendicion: _vm.rendicion } }),
-        _vm._v(" "),
         _c(
           "a",
           {
@@ -41056,8 +41079,7 @@ var render = function() {
           },
           [_c("i", { staticClass: "fas fa-trash-alt text-primary fa-lg" })]
         )
-      ],
-      1
+      ]
     )
   ])
 }
@@ -41091,229 +41113,241 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card shadow p-3 mb-5 bg-white rounded" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Rendiciones\r\n\r\n                "),
-            _c(
-              "div",
-              {
-                staticClass: "btn-group",
-                staticStyle: { float: "right" },
-                attrs: { role: "group", "aria-label": "Basic example" }
-              },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.AgregarNuevaRendicion()
+        _c(
+          "div",
+          { staticClass: "card shadow p-3 mb-5 bg-white rounded" },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Rendiciones\n\n                "),
+              _c(
+                "div",
+                {
+                  staticClass: "btn-group",
+                  staticStyle: { float: "right" },
+                  attrs: { role: "group", "aria-label": "Basic example" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.AgregarNuevaRendicion()
+                        }
                       }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fab fa-rev" }),
-                    _vm._v(" Agregar Rendicion")
-                  ]
-                )
-              ]
-            ),
+                    },
+                    [
+                      _c("i", { staticClass: "fab fa-rev" }),
+                      _vm._v(" Agregar Rendicion")
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "modal fade",
+                  attrs: {
+                    id: "NuevaRendicionModal",
+                    tabindex: "-1",
+                    role: "dialog",
+                    "aria-labelledby": "NuevaRendicionModalLabel",
+                    "aria-hidden": "true"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-dialog",
+                      attrs: { role: "document" }
+                    },
+                    [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                _vm.modoEdicion
+                                  ? _vm.ActualizarRendicion()
+                                  : _vm.NuevaRendicion()
+                              },
+                              keydown: function($event) {
+                                return _vm.form.onKeydown($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "modal-header" }, [
+                              _vm.modoEdicion
+                                ? _c(
+                                    "h5",
+                                    {
+                                      staticClass: "modal-title",
+                                      attrs: { id: "NuevaRendicionModalLabel" }
+                                    },
+                                    [_vm._v("Modificar Rendicion")]
+                                  )
+                                : _c(
+                                    "h5",
+                                    {
+                                      staticClass: "modal-title",
+                                      attrs: { id: "NuevaRendicionModalLabel" }
+                                    },
+                                    [_vm._v("Nueva Rendicion")]
+                                  ),
+                              _vm._v(" "),
+                              _vm._m(0)
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c("div", { staticClass: "form-row" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.id,
+                                      expression: "form.id"
+                                    }
+                                  ],
+                                  attrs: { name: "id", type: "hidden" },
+                                  domProps: { value: _vm.form.id },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form,
+                                        "id",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-12" },
+                                  [
+                                    _c("label", [_vm._v("Descripcion")]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.descripcion,
+                                          expression: "form.descripcion"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "form-control form-control-sm",
+                                      class: {
+                                        "is-invalid": _vm.form.errors.has(
+                                          "descripcion"
+                                        )
+                                      },
+                                      attrs: {
+                                        name: "descripcion",
+                                        type: "text",
+                                        placeholder:
+                                          "Descripcion de la Rendicion"
+                                      },
+                                      domProps: { value: _vm.form.descripcion },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
+                                            "descripcion",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("has-error", {
+                                      attrs: {
+                                        form: _vm.form,
+                                        field: "descripcion"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-footer" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: {
+                                    type: "button",
+                                    "data-dismiss": "modal"
+                                  }
+                                },
+                                [_vm._v("Cerrar")]
+                              ),
+                              _vm._v(" "),
+                              _vm.modoEdicion
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: { type: "submit" }
+                                    },
+                                    [_vm._v("Modificar")]
+                                  )
+                                : _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-success",
+                                      attrs: { type: "submit" }
+                                    },
+                                    [_vm._v("Guardar")]
+                                  )
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("detalles-component"),
             _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass: "modal fade",
-                attrs: {
-                  id: "NuevaRendicionModal",
-                  tabindex: "-1",
-                  role: "dialog",
-                  "aria-labelledby": "NuevaRendicionModalLabel",
-                  "aria-hidden": "true"
-                }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "modal-dialog", attrs: { role: "document" } },
-                  [
-                    _c("div", { staticClass: "modal-content" }, [
-                      _c(
-                        "form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              _vm.modoEdicion
-                                ? _vm.ActualizarRendicion()
-                                : _vm.NuevaRendicion()
-                            },
-                            keydown: function($event) {
-                              return _vm.form.onKeydown($event)
-                            }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "modal-header" }, [
-                            _vm.modoEdicion
-                              ? _c(
-                                  "h5",
-                                  {
-                                    staticClass: "modal-title",
-                                    attrs: { id: "NuevaRendicionModalLabel" }
-                                  },
-                                  [_vm._v("Modificar Rendicion")]
-                                )
-                              : _c(
-                                  "h5",
-                                  {
-                                    staticClass: "modal-title",
-                                    attrs: { id: "NuevaRendicionModalLabel" }
-                                  },
-                                  [_vm._v("Nueva Rendicion")]
-                                ),
-                            _vm._v(" "),
-                            _vm._m(0)
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "form-row" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.id,
-                                    expression: "form.id"
-                                  }
-                                ],
-                                attrs: { name: "id", type: "hidden" },
-                                domProps: { value: _vm.form.id },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.form,
-                                      "id",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-md-12" },
-                                [
-                                  _c("label", [_vm._v("Descripcion")]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.descripcion,
-                                        expression: "form.descripcion"
-                                      }
-                                    ],
-                                    staticClass: "form-control form-control-sm",
-                                    class: {
-                                      "is-invalid": _vm.form.errors.has(
-                                        "descripcion"
-                                      )
-                                    },
-                                    attrs: {
-                                      name: "descripcion",
-                                      type: "text",
-                                      placeholder: "Descripcion de la Rendicion"
-                                    },
-                                    domProps: { value: _vm.form.descripcion },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "descripcion",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("has-error", {
-                                    attrs: {
-                                      form: _vm.form,
-                                      field: "descripcion"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: {
-                                  type: "button",
-                                  "data-dismiss": "modal"
-                                }
-                              },
-                              [_vm._v("Cerrar")]
-                            ),
-                            _vm._v(" "),
-                            _vm.modoEdicion
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-primary",
-                                    attrs: { type: "submit" }
-                                  },
-                                  [_vm._v("Modificar")]
-                                )
-                              : _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-success",
-                                    attrs: { type: "submit" }
-                                  },
-                                  [_vm._v("Guardar")]
-                                )
-                          ])
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            _vm._l(_vm.rendiciones, function(rendicion, index) {
-              return _c("rendicion-component", {
-                key: rendicion.id,
-                attrs: { rendicion: rendicion, index: index },
-                on: {
-                  eliminar: function($event) {
-                    return _vm.EliminarRendicion(index)
+              { staticClass: "card-body" },
+              _vm._l(_vm.rendiciones, function(rendicion, index) {
+                return _c("rendicion-component", {
+                  key: rendicion.id,
+                  attrs: { rendicion: rendicion, index: index },
+                  on: {
+                    eliminar: function($event) {
+                      return _vm.EliminarRendicion(index)
+                    }
                   }
-                }
-              })
-            }),
-            1
-          )
-        ])
+                })
+              }),
+              1
+            )
+          ],
+          1
+        )
       ])
     ]
   )

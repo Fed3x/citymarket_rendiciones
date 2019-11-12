@@ -52,7 +52,7 @@ window.swal = swal;
 
 // window.toast = toast;
 
-const EvenBus = new Vue;
+
 
 const app = new Vue({
     el: '#app',

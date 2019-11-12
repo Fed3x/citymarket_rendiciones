@@ -52,11 +52,12 @@
 <script>
     import Vue from 'vue' 
     import { Form, HasError, AlertError } from 'vform'
+    import EventBus from "../../event-bus"
 
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
-        props:['rendicion'],
+        props:['detalle'],
         data(){
             return{
                 detalles_rendicion:[],
@@ -64,15 +65,26 @@
             }
         },
         mounted() {
-            axios.get('/rendicion_detalles/' + this.rendicion.id)
-                 .then((response)=>{
-                     console.log(response);
-                     this.detalles_rendicion = response.data;
+            
+            self = this;
+            EventBus.$on('actualizar', function(parametros) { // Para recibir un evento
+                console.log('recibi el event bus');
+                self.ActualizarDetalles(parametros);
             });
-            axios.get('/sitio')
-            .then((response)=>{
-                this.sitios = response.data;
-            });
+
+            if (this.detalle == null){
+                 console.log('es nulo');
+            }
+            else{
+                
+                
+            }
+
+
+            // axios.get('/sitio')
+            // .then((response)=>{
+            //     this.sitios = response.data;
+            // });
         },
         methods: {
             AgregarDetalle(){
@@ -83,6 +95,20 @@
                     sitio_hasta: ''
                         }
                     );
+            },
+            ActualizarDetalles(detalle){
+                console.log('estoy actualizando los detalles');
+                console.log(detalle);
+               
+                axios.get('/rendicion_detalles/' + detalle)
+                     .then((response)=>{
+                        this.detalles_rendicion = response.data;
+                });
+                $('#DetallesRendicionModal').modal({show: true, keyboard: false, backdrop: 'static'});
+                $('#DetallesRendicionModal').on('hidden.bs.modal', function (e) {
+                    this.detalles_rendicion.splice();
+                });
+
             },
             // AgregarNuevaRendicion(){
             //     this.modoEdicion = false;

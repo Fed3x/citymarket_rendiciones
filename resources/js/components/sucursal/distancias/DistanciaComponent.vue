@@ -32,7 +32,7 @@
     export default {
         props: ['distancia','index','sitios'],
         created: function() {
-            if (this.distancia.id == null){
+            if (this.distancia.id == null){ 
                 this.Modificar();
             }
             EventBus.$on('modificando', function(index){

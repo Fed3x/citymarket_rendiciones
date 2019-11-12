@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <detalles-component></detalles-component>
+                <detalles-component :detalle="detalle"></detalles-component>
                 <div class="card-body">
                     <rendicion-component
                     v-for="(rendicion, index) in rendiciones"
@@ -55,6 +55,7 @@
                     :rendicion="rendicion"
                     :index="index"
                     @eliminar="EliminarRendicion(index)"
+                    @ver_detalles="ModalDetalle(detalle)"
                     ></rendicion-component>
                 </div>
             </div>
@@ -76,6 +77,7 @@
                 }),
                 rendiciones:[],
                 modoEdicion: false,
+                detalle: null
             }
         },
         mounted() {
@@ -120,6 +122,10 @@
                     'La distancia fue actualizada',
                     'info'
                 )
+            },
+            ModalDetalle(detalle){
+                this.detalle = detalle;
+                
             },
             EliminarRendicion(index){
                 this.rendiciones.splice(index,1);

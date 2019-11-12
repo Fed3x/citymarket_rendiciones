@@ -2137,6 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 //
 //
 //
@@ -2188,12 +2189,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['rendicion'],
+  props: ['detalle'],
   data: function data() {
     return {
       detalles_rendicion: [],
@@ -2201,15 +2203,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    self = this;
+    _event_bus__WEBPACK_IMPORTED_MODULE_2__["default"].$on('actualizar', function (parametros) {
+      // Para recibir un evento
+      console.log('recibi el event bus');
+      self.ActualizarDetalles(parametros);
+    });
 
-    axios.get('/rendicion_detalles/' + this.rendicion.id).then(function (response) {
-      console.log(response);
-      _this.detalles_rendicion = response.data;
-    });
-    axios.get('/sitio').then(function (response) {
-      _this.sitios = response.data;
-    });
+    if (this.detalle == null) {
+      console.log('es nulo');
+    } else {} // axios.get('/sitio')
+    // .then((response)=>{
+    //     this.sitios = response.data;
+    // });
+
   },
   methods: {
     AgregarDetalle: function AgregarDetalle() {
@@ -2219,6 +2226,23 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         kilometraje: '0',
         sitio_desde: '',
         sitio_hasta: ''
+      });
+    },
+    ActualizarDetalles: function ActualizarDetalles(detalle) {
+      var _this = this;
+
+      console.log('estoy actualizando los detalles');
+      console.log(detalle);
+      axios.get('/rendicion_detalles/' + detalle).then(function (response) {
+        _this.detalles_rendicion = response.data;
+      });
+      $('#DetallesRendicionModal').modal({
+        show: true,
+        keyboard: false,
+        backdrop: 'static'
+      });
+      $('#DetallesRendicionModal').on('hidden.bs.modal', function (e) {
+        this.detalles_rendicion.splice();
       });
     },
     // AgregarNuevaRendicion(){
@@ -2270,6 +2294,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 //
 //
 //
@@ -2289,7 +2314,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2297,16 +2322,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['rendicion'],
   data: function data() {
-    return {
-      detalles_rendicion: [],
-      sitios: [],
-      vacio: "" //   form:new Form({
+    return {//   form:new Form({
       //         id: '',
       //         descripcion: '',
       //     }),
       //     distancias:[],
       //     modoEdicion: false,
-
     };
   },
   mounted: function mounted() {// console.log(this.rendicion);
@@ -2333,20 +2354,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       });
     },
     VerDetalles: function VerDetalles() {
-      var _this = this;
-
-      this.detalles_rendicion = this.detalles_rendicion.splice(); // console.log(this.detalles_rendicion);
-
-      axios.get('/rendicion_detalles/' + this.rendicion.id).then(function (response) {
-        console.log(response);
-
-        _this.detalles_rendicion.push(response.data);
-      });
-      $('#DetallesRendicionModal').modal({
-        show: true,
-        keyboard: false,
-        backdrop: 'static'
-      });
+      console.log('llamando a event bus');
+      _event_bus__WEBPACK_IMPORTED_MODULE_2__["default"].$emit('actualizar', this.rendicion.id);
     },
     NuevaDistancia: function NuevaDistancia(distancia, index) {
       this.distancias.splice(index, 1, distancia);
@@ -2362,10 +2371,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       swal('Actualizado!', 'La distancia fue actualizada', 'info');
     },
     Eliminar: function Eliminar() {
-      var _this2 = this;
+      var _this = this;
 
       axios["delete"]('/rendicion/' + this.rendicion.id).then(function () {
-        _this2.$emit('eliminar', _this2.index);
+        _this.$emit('eliminar', _this.index);
       })["catch"](function () {
         swal("Error!", "Algo anda mal", "warning");
       });
@@ -2454,6 +2463,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
@@ -2466,7 +2476,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         descripcion: ''
       }),
       rendiciones: [],
-      modoEdicion: false
+      modoEdicion: false,
+      detalle: null
     };
   },
   mounted: function mounted() {
@@ -2509,6 +2520,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     ActualizarDistancia: function ActualizarDistancia(distancia, index) {
       this.distancias.splice(index, 1, distancia);
       swal('Actualizado!', 'La distancia fue actualizada', 'info');
+    },
+    ModalDetalle: function ModalDetalle(detalle) {
+      this.detalle = detalle;
     },
     EliminarRendicion: function EliminarRendicion(index) {
       this.rendiciones.splice(index, 1);
@@ -41327,7 +41341,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("detalles-component"),
+            _c("detalles-component", { attrs: { detalle: _vm.detalle } }),
             _vm._v(" "),
             _c(
               "div",
@@ -41339,6 +41353,9 @@ var render = function() {
                   on: {
                     eliminar: function($event) {
                       return _vm.EliminarRendicion(index)
+                    },
+                    ver_detalles: function($event) {
+                      return _vm.ModalDetalle(_vm.detalle)
                     }
                   }
                 })
@@ -55683,7 +55700,6 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_0___default.a; // const toast 
 // });
 // window.toast = toast;
 
-var EvenBus = new Vue();
 var app = new Vue({
   el: '#app'
 });
@@ -55745,6 +55761,23 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/event-bus.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/event-bus.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
+/* harmony default export */ __webpack_exports__["default"] = (EventBus);
 
 /***/ }),
 

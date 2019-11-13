@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button @click="CerrarDetalle()" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                     </div>
             </div>
         </div>
@@ -71,20 +71,10 @@
                 console.log('recibi el event bus');
                 self.ActualizarDetalles(parametros);
             });
-
-            if (this.detalle == null){
-                 console.log('es nulo');
-            }
-            else{
-                
-                
-            }
-
-
-            // axios.get('/sitio')
-            // .then((response)=>{
-            //     this.sitios = response.data;
-            // });
+            axios.get('/sitio')
+            .then((response)=>{
+                this.sitios = response.data;
+            });
         },
         methods: {
             AgregarDetalle(){
@@ -105,10 +95,12 @@
                         this.detalles_rendicion = response.data;
                 });
                 $('#DetallesRendicionModal').modal({show: true, keyboard: false, backdrop: 'static'});
-                $('#DetallesRendicionModal').on('hidden.bs.modal', function (e) {
-                    this.detalles_rendicion.splice();
-                });
 
+            },
+            CerrarDetalle(){
+                $('#DetallesRendicionModal').modal({show: false});
+                this.detalles_rendicion = this.detalles_rendicion.splice();
+                console.log('vaciando array');
             },
             // AgregarNuevaRendicion(){
             //     this.modoEdicion = false;

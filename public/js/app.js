@@ -2203,20 +2203,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     self = this;
     _event_bus__WEBPACK_IMPORTED_MODULE_2__["default"].$on('actualizar', function (parametros) {
       // Para recibir un evento
       console.log('recibi el event bus');
       self.ActualizarDetalles(parametros);
     });
-
-    if (this.detalle == null) {
-      console.log('es nulo');
-    } else {} // axios.get('/sitio')
-    // .then((response)=>{
-    //     this.sitios = response.data;
-    // });
-
+    axios.get('/sitio').then(function (response) {
+      _this.sitios = response.data;
+    });
   },
   methods: {
     AgregarDetalle: function AgregarDetalle() {
@@ -2229,21 +2226,25 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
       });
     },
     ActualizarDetalles: function ActualizarDetalles(detalle) {
-      var _this = this;
+      var _this2 = this;
 
       console.log('estoy actualizando los detalles');
       console.log(detalle);
       axios.get('/rendicion_detalles/' + detalle).then(function (response) {
-        _this.detalles_rendicion = response.data;
+        _this2.detalles_rendicion = response.data;
       });
       $('#DetallesRendicionModal').modal({
         show: true,
         keyboard: false,
         backdrop: 'static'
       });
-      $('#DetallesRendicionModal').on('hidden.bs.modal', function (e) {
-        this.detalles_rendicion.splice();
+    },
+    CerrarDetalle: function CerrarDetalle() {
+      $('#DetallesRendicionModal').modal({
+        show: false
       });
+      this.detalles_rendicion = this.detalles_rendicion.splice();
+      console.log('vaciando array');
     },
     // AgregarNuevaRendicion(){
     //     this.modoEdicion = false;
@@ -40893,7 +40894,21 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: {
+                    click: function($event) {
+                      return _vm.CerrarDetalle()
+                    }
+                  }
+                },
+                [_vm._v("Cerrar")]
+              )
+            ])
           ])
         ]
       )
@@ -40961,21 +40976,6 @@ var staticRenderFns = [
           [_vm._v("Accion")]
         )
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Cerrar")]
-      )
     ])
   }
 ]

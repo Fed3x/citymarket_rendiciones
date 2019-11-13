@@ -5,7 +5,7 @@
             <small >
 
                  
-            CREADO EL: <b>{{rendicion.creado_el}}</b>
+            CREADO EL: <b>{{moment(rendicion.creado_el).format('DD-MM-YYYY HH:mm')}}</b>
             </small>
         </div>
         <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
@@ -22,13 +22,14 @@
     import { Form, HasError, AlertError } from 'vform'
 
     import EventBus from "../../event-bus"
-
+    var moment = require('moment');
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
         props:['rendicion'],
         data(){
             return{
+                moment: moment,
             //   form:new Form({
             //         id: '',
             //         descripcion: '',
@@ -38,7 +39,7 @@
             }
         },
         mounted() {
-            // console.log(this.rendicion);
+            console.log(this.rendicion);
             // axios.get('/distancia')
             //      .then((response)=>{
                      

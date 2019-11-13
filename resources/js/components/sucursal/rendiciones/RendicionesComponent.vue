@@ -85,6 +85,7 @@
                  .then((response)=>{
                     this.rendiciones = response.data;
             });
+            
         },
         methods: {
             AgregarNuevaRendicion(){

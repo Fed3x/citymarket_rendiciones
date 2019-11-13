@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Rendicion extends Model
 {
@@ -17,5 +18,6 @@ class Rendicion extends Model
         $this->attributes['descripcion'] = strtoupper($value);
     }
 
-    public $timestamps = false; 
+    public $timestamps = false;
+
 }

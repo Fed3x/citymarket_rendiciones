@@ -27,7 +27,7 @@ class RendicionesController extends Controller
         $rendicion->save();
         $id = $rendicion->id;
         $nueva_rendicion = Rendicion::where('id', $id)->get();
-  
+        
         return $nueva_rendicion->last();
     }
 

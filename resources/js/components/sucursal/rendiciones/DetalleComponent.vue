@@ -1,9 +1,9 @@
 <template>
     <tr>
         <th > {{index+1}}</th>
-        <td  class="col-sm-4 text-center" v-if="modoEdicion"><v-select v-model="draft.id_sitio_desde" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
+        <td  class="col-sm-4 text-center" v-if="modoEdicion"><v-select v-model="draft.id_sitio_desde" label="descripcion" @input="Desde"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
         <td  class="col-sm-4 text-center" v-else>{{detalle_rendicion.sitio_desde.descripcion}}</td>
-        <td  class="col-sm-4 text-center" v-if="modoEdicion"><v-select v-model="draft.id_sitio_hasta" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
+        <td  class="col-sm-4 text-center" v-if="modoEdicion"><v-select v-model="draft.id_sitio_hasta" label="descripcion" @input="Hasta"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
         <td  class="col-sm-4 text-center" v-else>{{detalle_rendicion.sitio_hasta.descripcion}}</td>
         <td  class="col-sm-2 text-center" v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.kilometraje"></td>
         <td  class="col-sm-2 text-center" v-else>{{detalle_rendicion.kilometraje}}</td>
@@ -11,7 +11,7 @@
         <td  class="col-sm-2 text-center" v-else><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
         
     </tr> 
-</template>
+</template>         
 <script>
     import Vue from 'vue'
     var EventBus = new Vue
@@ -93,6 +93,17 @@
                 //     swal("Error!", "Algo anda mal", "warning");
                 // });
             },
+            Desde(valor){
+               this.BuscarDistancia(valor, this.draft.id_sitio_hasta);
+            },
+            Hasta(valor){
+                this.BuscarDistancia(this.draft.id_sitio_desde, valor);
+            },
+            BuscarDistancia(desde, hasta){
+                console.log('Buscando distancia.. desde: ' + desde + ' hasta: '+ hasta);
+
+            },
+
             Eliminar(){
                 if (this.distancia.id != null){
 

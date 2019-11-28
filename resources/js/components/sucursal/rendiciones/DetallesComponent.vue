@@ -21,11 +21,12 @@
                             <table class="table table-hover table-sm table-borderless">
                                     <thead class="">
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col" class="col-sm-4 text-center">Sitio Desde</th>
-                                            <th scope="col" class="col-sm-4 text-center">Sitio Hasta</th>
+                                            <th scope="col" class="col-sm-1 text-center">#</th>
+                                            <th scope="col" class="col-sm-2 text-center">Fecha</th>
+                                            <th scope="col" class="col-sm-3 text-center">Sitio Desde</th>
+                                            <th scope="col" class="col-sm-3 text-center">Sitio Hasta</th>
                                             <th scope="col" class="col-sm-2 text-center">Kilometraje</th>
-                                            <th scope="col" class="col-sm-2 text-center">Accion</th>
+                                            <th scope="col" class="col-sm-1 text-center">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -34,9 +35,10 @@
                                             :detalle_rendicion="detalle_rendicion" 
                                             :index="index"
                                             :sitios="sitios"
-                                            @nuevo="NuevaDistancia(...arguments, index)"
+                                            :id_rendicion="id_rendicion"
+                                            @nuevo="NuevoDetalle(...arguments, index)"
                                             @actualizar="ActualizarDetalle(...arguments, index)"
-                                            @eliminar="EliminarDistancia(index)">
+                                            @eliminar="EliminarDetalle(index)">
                                         </detalle-component> 
                                     </tbody>
                             </table>
@@ -62,6 +64,7 @@
             return{
                 detalles_rendicion:[],
                 sitios:[],
+                id_rendicion:0,
             }
         },
         mounted() {
@@ -69,7 +72,7 @@
             self = this;
             EventBus.$on('actualizar', function(parametros) { // Para recibir un evento
                 console.log('recibi el event bus');
-                self.ActualizarDetalles(parametros);
+                self.CargarDetalles(parametros);
             });
             axios.get('/sitio')
             .then((response)=>{
@@ -86,7 +89,8 @@
                         }
                     );
             },
-            ActualizarDetalles(detalle){
+            CargarDetalles(detalle){
+                this.id_rendicion = detalle;
                 console.log('estoy actualizando los detalles');
                 console.log(detalle);
                
@@ -117,14 +121,14 @@
             //          });
                 
             // },
-            // NuevaDistancia(distancia, index){
-            //     this.distancias.splice(index, 1, distancia);
-            //     swal(
-            //         'Creado!',
-            //         'La distancia fue guardada!',
-            //         'success'
-            //     )
-            // },
+            NuevoDetalle(detalle_rendicion, index){
+                this.detalles_rendicion.splice(index, 1, detalle_rendicion);
+                swal(
+                    'Creado!',
+                    'La distancia fue guardada!',
+                    'success'
+                )
+            },
             // ImportarDistancia(distancia){
             //     for (let i in distancia){
             //          this.distancias.push(distancia[i]);
@@ -138,9 +142,9 @@
                     'info'
                 )
             },
-            // EliminarDistancia(index){
-            //     this.distancias.splice(index,1);
-            // },
+            EliminarDetalle(index){
+                this.detalles_rendicion.splice(index,1);
+            },
             // ImportarDistanciaModal(){
             //     $('#ImportarSitioModal').modal('show');
             // },

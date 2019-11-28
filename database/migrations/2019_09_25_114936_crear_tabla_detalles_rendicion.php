@@ -20,7 +20,6 @@ class CrearTablaDetallesRendicion extends Migration
             $table->unsignedBigInteger('id_rendicion');
             $table->foreign('id_rendicion')->references('id')->on('rendiciones');
 
-
             $table->unsignedBigInteger('id_sitio_desde');
             $table->foreign('id_sitio_desde')->references('id')->on('org_sitios');
 
@@ -28,6 +27,7 @@ class CrearTablaDetallesRendicion extends Migration
             $table->foreign('id_sitio_hasta')->references('id')->on('org_sitios');
 
             $table->double('kilometraje', 4, 2);
+            $table->date('fecha');
 
             $table->timestamp('creado_el');
             $table->string('creado_por', 20);
@@ -36,11 +36,6 @@ class CrearTablaDetallesRendicion extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('detalles_rendicion');

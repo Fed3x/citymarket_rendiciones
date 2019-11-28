@@ -58,6 +58,18 @@ class DistanciasController extends Controller
         $distancia = Distancia::findOrFail($id);
         $distancia->delete();
     }
+
+    public function buscar(Request $request){
+        $id_sitio_desde = $request->id_sitio_desde;
+        $id_sitio_hasta = $request->id_sitio_hasta;
+
+        $kilometraje = Distancia::select('kilometraje')
+                        ->where([['id_sitio_desde','=',$id_sitio_desde],['id_sitio_hasta','=', $id_sitio_hasta]])
+                        ->orWhere([['id_sitio_desde','=',$id_sitio_hasta],['id_sitio_hasta','=', $id_sitio_desde]])
+                        ->first();
+        return $kilometraje;
+    }
+
     public function import(Request $request)
     {
         $this->validate($request,[

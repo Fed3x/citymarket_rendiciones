@@ -37,8 +37,10 @@ Route::get('/pruebaspdf', function(){
     return view('PDF.plantilla');
 });
 
+Route::post('/BuscarDistancias', 'DistanciasController@buscar');
 Route::post('/ImportarDistancias', 'DistanciasController@import');
 Route::get('/distancia/export/', 'DistanciasController@export');
+
 
     
 Route::get('/home', 'HomeController@index')->name('home');

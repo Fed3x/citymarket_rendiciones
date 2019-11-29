@@ -115,9 +115,9 @@
                      .then((response) => {
                          console.log(this.draft.kilometraje);
                          if(response.data.kilometraje != null){
-                             this.$set(this.draft, 'kilometraje', response.data.kilometraje);
+                            this.draft = Object.assign({}, this.draft, { kilometraje: response.data.kilometraje });
                          }else{
-                             console.log('vacio');
+                            this.draft = Object.assign({}, this.draft, { kilometraje: 0 });
                          }
                          console.log(this.draft.kilometraje);
                 }).catch((error)=> {

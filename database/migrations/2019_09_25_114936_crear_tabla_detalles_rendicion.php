@@ -26,6 +26,7 @@ class CrearTablaDetallesRendicion extends Migration
             $table->unsignedBigInteger('id_sitio_hasta');
             $table->foreign('id_sitio_hasta')->references('id')->on('org_sitios');
 
+            $table->string('finalidad', 200);
             $table->double('kilometraje', 4, 2);
             $table->date('fecha');
 

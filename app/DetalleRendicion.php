@@ -9,7 +9,7 @@ class DetalleRendicion extends Model
     protected $table= 'detalles_rendicion';
 
     protected $fillable = [
-    'id_rendicion','id_sitio_desde','id_sitio_hasta', 'kilometraje','actualizado_el','actualizado_por'
+    'id_rendicion','id_sitio_desde','id_sitio_hasta', 'kilometraje','actualizado_el','actualizado_por', 'fecha', 'finalidad'
     ];
     
     public function setDescripcionAttribute($value)
@@ -19,7 +19,11 @@ class DetalleRendicion extends Model
 
     public $timestamps = false; 
 
-    
+    public function rendicion()
+    {
+       return $this->belongsTo('App\Rendicion', 'id_rendicion');
+    }
+
     public function sitio_desde()
     {
        return $this->belongsTo('App\Sitio', 'id_sitio_desde', 'id');

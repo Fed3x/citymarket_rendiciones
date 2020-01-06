@@ -26,6 +26,7 @@ class RendicionDetallesController extends Controller
         $detalle->fecha = $request->fecha;
         $detalle->kilometraje = $request->kilometraje;
         $detalle->id_rendicion = $request->id_rendicion;
+        $detalle->finalidad = $request->finalidad;
 
         $detalle->creado_el = Carbon::now();
         $detalle->creado_por = auth()->user()->usuario;
@@ -53,6 +54,8 @@ class RendicionDetallesController extends Controller
         $detalle->id_sitio_desde = $request->id_sitio_desde;
         $detalle->id_sitio_hasta = $request->id_sitio_hasta;
         $detalle->kilometraje = $request->kilometraje;
+        $detalle->fecha = $request->fecha;
+        $detalle->finalidad = $request->finalidad;
         $detalle->save();
         $id = $detalle->id;
 

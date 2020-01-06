@@ -32,10 +32,13 @@ Route::get('/rendiciones', function () {
     return view('rendiciones');
 });
 
-Route::get('/pruebas', 'SitiosSQLSRVController@importar');
-Route::get('/pruebaspdf', function(){
-    return view('PDF.plantilla');
+Route::get('/flotas', function(){
+    return view('flota');
 });
+
+Route::get('/pruebas', 'SitiosSQLSRVController@importar');
+
+Route::get('/pdf/{id}', 'PDFController@exportar');
 
 Route::post('/BuscarDistancias', 'DistanciasController@buscar');
 Route::post('/ImportarDistancias', 'DistanciasController@import');
@@ -52,6 +55,7 @@ Route::ApiResource('sitio', 'SitiosController');
 Route::ApiResource('distancia', 'DistanciasController');
 Route::ApiResource('rendicion', 'RendicionesController');
 Route::ApiResource('rendicion_detalles', 'RendicionDetallesController');
+Route::ApiResource('flota', 'FlotasController');
 
 Route::get('/logout', function(){
     Session::flush();

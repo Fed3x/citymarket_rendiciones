@@ -30,6 +30,9 @@ Vue.component('rendicion-component', require('./components/sucursal/rendiciones/
 Vue.component('detalles-component', require('./components/sucursal/rendiciones/DetallesComponent.vue').default);
 Vue.component('detalle-component', require('./components/sucursal/rendiciones/DetalleComponent.vue').default);
 
+//FLOTA
+
+Vue.component('flota-component', require('./components/flota/FlotaComponent.vue').default);
 
 Vue.component('tareas-component', require('./components/tarea/TareasComponent.vue').default);
 Vue.component('form-tarea-component', require('./components/tarea/FormTareaComponent.vue').default);

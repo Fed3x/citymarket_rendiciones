@@ -87,7 +87,7 @@ class DistanciasController extends Controller
         $importados = new DistanciasImport;
         $importados->import(request()->file('file'));
 
-        foreach ($importados->failures() as $failure) {
+        foreach ($importados->failures as $failure) {
             array_push($fallos, $fallo);
             $ultimo = array_key_last($fallos);
             $fallos[$ultimo]["fila"] = $failure->row();
@@ -95,10 +95,8 @@ class DistanciasController extends Controller
             $fallos[$ultimo]["error"] = $failure->errors();
            
        }
-        $nueva_distancia = Distancia::whereIn('id', $importados->getIdentificadores())->with(['sitio_desde','sitio_hasta'])->get();
-        
+        $nueva_distancia = Distancia::whereIn('id', $importados->getIdentificadores()->with(['sitio_desde','sitio_hasta'])->get();
         return [$nueva_distancia,$fallos];
-        // return $importados;
     }   
 
     public function export(){

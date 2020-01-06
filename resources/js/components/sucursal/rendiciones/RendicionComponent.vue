@@ -12,7 +12,7 @@
 
 
             <a href="#" @click="VerDetalles()" data-toggle="tooltip" data-placement="auto" title="Ver Detalles" ><i class="fas fa-eye text-info  fa-lg"></i></a><b> | </b>
-            <a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>
+            <a href="#" v-on:click="Exportar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>
             <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-primary fa-lg"></i></a>
         </div>
     </div>
@@ -103,6 +103,10 @@
             ImportarDistanciaModal(){
                 $('#ImportarSitioModal').modal('show');
             },
+            Exportar(){
+                console.log('exportar');
+                window.location.href = '/pdf/' + this.rendicion.id;
+            }
         }
       
     }

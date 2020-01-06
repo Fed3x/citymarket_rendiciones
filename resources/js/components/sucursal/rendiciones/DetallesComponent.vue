@@ -1,8 +1,8 @@
 <template>
     <div class="modal fade" id="DetallesRendicionModal" tabindex="-1" role="dialog"
         aria-labelledby="DetallesRendicionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog modal-xl" role="document" style="min-width: 100%; margin: 5px 0px 5px 0px;"> <!--style="min-width: 100%; margin: 5px 0px 5px -9px; -->
+            <div class="modal-content" style="min-height: 100vh;"> <!--style="min-height: 100vh;"-->
                     <div class="modal-header">
                         <h5 class="modal-title" id="DetallesRendicionModalLabel">Detalles</h5>
                         
@@ -22,10 +22,11 @@
                                     <thead class="">
                                         <tr>
                                             <th scope="col" class="col-sm-1 text-center">#</th>
-                                            <th scope="col" class="col-sm-2 text-center">Fecha</th>
+                                            <th scope="col" class="col-sm-1 text-center">Fecha</th>
                                             <th scope="col" class="col-sm-3 text-center">Sitio Desde</th>
                                             <th scope="col" class="col-sm-3 text-center">Sitio Hasta</th>
-                                            <th scope="col" class="col-sm-2 text-center">Kilometraje</th>
+                                            <th scope="col" class="col-sm-1 text-center">Kilometraje</th>
+                                            <th scope="col" class="col-sm-1 text-center">Finalidad</th>
                                             <th scope="col" class="col-sm-1 text-center">Accion</th>
                                         </tr>
                                     </thead>

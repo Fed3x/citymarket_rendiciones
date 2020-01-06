@@ -20,4 +20,8 @@ class Rendicion extends Model
 
     public $timestamps = false;
 
+    public function detalles()
+    {
+        return $this->hasMany('App\DetalleRendicion', 'id_rendicion');
+    }
 }

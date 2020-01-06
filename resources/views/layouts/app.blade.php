@@ -251,7 +251,7 @@
                                 <i class="fas fa-user-circle"> {{auth()->user()->usuario}}</i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="/flotas">Flotas</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout">Cerrar Sesion</a>

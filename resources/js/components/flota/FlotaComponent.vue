@@ -1,18 +1,52 @@
 <template>
-    <tr>
-        <th class="col-sm-1 text-center"> {{index+1}}</th>
-        <td class="col-sm-4 text-center" v-if="modoEdicion"><v-select id="dist_desde" v-model="draft.id_sitio_desde" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
-        <td class="col-sm-4 text-center" v-else>{{distancia.sitio_desde.descripcion}}</td>
-        <td class="col-sm-4 text-center" v-if="modoEdicion"><v-select id="dist_hasta" v-model="draft.id_sitio_hasta" label="descripcion" :options="sitios" :reduce="sitios => sitios.id" ></v-select>        
-        </td>
-        <td class="col-sm-4 text-center" v-else>{{distancia.sitio_hasta.descripcion}}</td>
-        <td class="col-sm-1 text-center" v-if="modoEdicion"><input type="text" class="form-control form-control-sm text-center" v-model="draft.kilometraje"></td>
-        <td class="col-sm-1 text-center" v-else>{{distancia.kilometraje}}</td>
-        
-        <td class="col-sm-1 text-center" v-if="modoEdicion"><a href="#!" v-on:click="distancia.id == null ? Agregar():Actualizar()" data-toggle="tooltip" data-placement="auto" title="Guardar la distancia" ><i class="fas fa-save text-primary fa-lg"></i></a><b> | </b> <a href="#!" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
-        <td class="col-sm-1 text-center" v-else><a href="#!" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#!" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
-        
-    </tr> 
+<div>
+      <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">City</label>
+      <input type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputZip">Zip</label>
+      <input type="text" class="form-control" id="inputZip">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+</div>
+
+
 </template>
 
 

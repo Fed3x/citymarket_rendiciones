@@ -12,15 +12,15 @@
             </div>
             <importar-distancia-component @importar="ImportarDistancia(...arguments)"></importar-distancia-component>
             <div class="card-body">
-                <div class="table-responsive">
+                <div id="table_distancias" class="table-responsive">
                     <table class="table table-hover table-sm table-borderless">
                             <thead class="">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col" class="col-sm-4">Sitio Desde</th>
-                                    <th scope="col" class="col-sm-4">Sitio Hasta</th>
-                                    <th scope="col" class="col-sm-1">Kilometraje</th>
-                                    <th scope="col" >Accion</th>
+                                    <th scope="col" class="col-sm-1 text-center">#</th>
+                                    <th scope="col" class="col-sm-4 text-center">Sitio Desde</th>
+                                    <th scope="col" class="col-sm-4 text-center">Sitio Hasta</th>
+                                    <th scope="col" class="col-sm-1 text-center">Kilometraje</th>
+                                    <th scope="col" class="col-sm-1 text-center">Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +42,15 @@
     </div>
 </div>
 </template>
+<style>
+#table_distancias{
+    overflow-x: unset;
+}
+
+#table_distancias .table-responsive{
+    overflow-x: unset;
+}
+</style>
 <script>
     import Vue from 'vue' 
     import { Form, HasError, AlertError } from 'vform'

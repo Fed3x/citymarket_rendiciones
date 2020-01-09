@@ -1,39 +1,36 @@
 <template>
-
-<div class="container">   
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Flota</div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                            <label for="inputBrand">Marca</label>
-                            <input type="text" class="form-control" id="inputBrand">
+    <div class="container">   
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Flota</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                <label for="inputBrand">Marca</label>
+                                <input type="text" class="form-control" id="inputBrand">
+                                </div>
+                                <div class="form-group col-md-12">
+                                <label for="inputModel">Modelo</label>
+                                <input type="text" class="form-control" id="inputModel">
+                                </div>
+                                <div class="form-group col-md-12">
+                                <label for="inputPatent">Patente</label>
+                                <input type="text" class="form-control" id="inputPatent">
+                                </div>
+                                <div class="form-group col-md-12">
+                                <label for="inputYear">Año</label>
+                                <input type="number" class="form-control" id="inputYear">
+                                </div>
                             </div>
-                            <div class="form-group col-md-12">
-                            <label for="inputModel">Modelo</label>
-                            <input type="text" class="form-control" id="inputModel">
-                            </div>
-                            <div class="form-group col-md-12">
-                            <label for="inputPatent">Patente</label>
-                            <input type="text" class="form-control" id="inputPatent">
-                            </div>
-                            <div class="form-group col-md-12">
-                            <label for="inputYear">Año</label>
-                            <input type="number" class="form-control" id="inputYear">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
 </template>
 
 

@@ -15,7 +15,19 @@ class CrearTablaUsuariosFlota extends Migration
     {
         Schema::create('org_usuarios_flota', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+
+
+            
+            $table->string('matricula', 10);
+
+            
+            $table->unsignedBigInteger('id_usuario');
+            $table->foreign('id_usuario')->references('id')->on('org_usuarios');
+
+            $table->timestamp('creado_el');
+            $table->string('creado_por', 20);
+            $table->timestamp('actualizado_el')->nullable();
+            $table->string('actualizado_por', 20)->nullable();
         });
     }
 

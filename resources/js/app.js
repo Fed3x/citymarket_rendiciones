@@ -30,9 +30,13 @@ Vue.component('rendicion-component', require('./components/sucursal/rendiciones/
 Vue.component('detalles-component', require('./components/sucursal/rendiciones/DetallesComponent.vue').default);
 Vue.component('detalle-component', require('./components/sucursal/rendiciones/DetalleComponent.vue').default);
 
-//FLOTA
+//USUARIO
 
-Vue.component('flota-component', require('./components/flota/FlotaComponent.vue').default);
+Vue.component('flota-component', require('./components/usuario/FlotaComponent.vue').default);
+Vue.component('perfil-component', require('./components/usuario/PerfilComponent.vue').default);
+Vue.component('usuario-component', require('./components/usuario/UsuarioComponent.vue').default);
+
+//TAREA
 
 Vue.component('tareas-component', require('./components/tarea/TareasComponent.vue').default);
 Vue.component('form-tarea-component', require('./components/tarea/FormTareaComponent.vue').default);

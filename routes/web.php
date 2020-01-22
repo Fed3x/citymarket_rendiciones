@@ -56,6 +56,8 @@ Route::ApiResource('distancia', 'DistanciasController');
 Route::ApiResource('rendicion', 'RendicionesController');
 Route::ApiResource('rendicion_detalles', 'RendicionDetallesController');
 Route::ApiResource('flota', 'FlotasController');
+Route::ApiResource('auto_marca', 'AutoMarcasController');
+Route::ApiResource('auto_modelo','AutoModelosController');
 
 Route::get('/logout', function(){
     Session::flush();

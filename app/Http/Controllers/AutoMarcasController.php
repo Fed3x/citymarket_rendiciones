@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Rendicion;
+use App\AutoMarca;
 
-
-class RendicionesController extends Controller
+class AutoMarcasController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
@@ -15,8 +14,8 @@ class RendicionesController extends Controller
 
     public function index()
     {
-        $rendiciones = Rendicion::orderBy('id')->get();
-        return $rendiciones;
+        $auto_marcas = AutoMarca::orderBy('id')->get();
+        return $auto_marcas;
     }
     public function store(Request $request)
     {
@@ -24,7 +23,6 @@ class RendicionesController extends Controller
         $rendicion->descripcion = $request->descripcion;
         $rendicion->creado_el = Carbon::now();
         $rendicion->creado_por = auth()->user()->usuario;
-        $rendicion->id_usuario = auth()->user()->id;
         $rendicion->save();
         $id = $rendicion->id;
         $nueva_rendicion = Rendicion::where('id', $id)->get();

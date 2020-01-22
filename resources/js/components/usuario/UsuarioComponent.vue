@@ -61,7 +61,6 @@
         },
         methods: {
             VerFlota(){
-                console.log('llamando a event bus-flota');
                 EventBus.$emit('flota', this.user);
                  
             },

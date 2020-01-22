@@ -14,23 +14,38 @@
                     </div>
                     
                     <div class="modal-body">
-                            <div class="form-row">
+                        <div class="form-row">
+
+                        <div class="col-md-3">
                             <div class="form-group col-md-12">
-                            <label for="inputBrand">Marca</label>
-                            <input type="text" class="form-control" id="inputBrand">
+                                Marca: 
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                Modelo: 
                             </div>
                             <div class="form-group col-md-12">
-                            <label for="inputModel">Modelo</label>
-                            <input type="text" class="form-control" id="inputModel">
+                                Matricula: 
                             </div>
                             <div class="form-group col-md-12">
-                            <label for="inputPatent">Patente</label>
-                            <input type="text" class="form-control" id="inputPatent">
+                                Año: 
                             </div>
+                        </div>
+                        <div class="col-md-9">
                             <div class="form-group col-md-12">
-                            <label for="inputYear">Año</label>
-                            <input type="number" class="form-control" id="inputYear">
+                                &nbsp;<v-select id="inputBrand" v-model="draft.id_marca" label="descripcion" :options="auto_marcas" :reduce="auto_marcas => auto_marcas.id" ></v-select>
                             </div>
+
+                            <div class="form-group col-md-12">
+                                &nbsp;<v-select id="inputModel" v-model="draft.id_modelo" label="descripcion" :options="auto_marcas" :reduce="auto_marcas => auto_marcas.id" ></v-select>
+                            </div>
+                            <div class="form-group col-md-12" style="display: flex">
+                                <input type="text" class="form-control form-control-sm text-center" id="inputPatent" >
+                            </div>
+                            <div class="form-group col-md-12" style="display: flex">
+                                <input type="number" class="form-control form-control-sm text-center" id="inputYear" >
+                            </div>
+                        </div>
                     </div>
                     </div>
                     <div class="modal-footer">
@@ -61,7 +76,6 @@
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
-        // props: ['distancia','index','sitios'],
         created(){
 
         },
@@ -69,22 +83,28 @@
             return{
                 modoEdicion: false,
                 draft:[{
-                    id_sitio_desde: '',
-                    id_sitio_hasta: '',
-                    kilometraje: ''
+                    id_marca: '',
+                    id_modelo: '',
+                    año: '',
+                    matricula: ''
                 }],
+                auto_marcas: [],
+                auto_modelos: []
             }
         },
         mounted() {
-            EventBus.$on('flota', function(parametros){
-                console.log('recibi el event bus-flota');
+            EventBus.$on('flota', (parametros) => { 
                 this.MostrarFlota();
-            }.bind(this));
+            });
+            axios.get('/auto_marca')
+                 .then((response)=>{
+                    this.auto_marcas = response.data;
+            });
 
         },
         methods: {
             MostrarFlota(){
-                console.log('MostraRFlota');
+                this.modoEdicion = true;
                 $('#FlotaModal').modal({show: true, keyboard: false, backdrop: 'static'});
             },
             // Modificar(){
@@ -149,3 +169,24 @@
       
     }
 </script>
+
+<style >
+#inputBrand{
+    width: 315px;
+    margin-top: -25px;
+}
+
+#inputModel{
+    width: 315px;
+    margin-top: -25px;
+}
+
+#inputYear{
+    width: 390px;
+}
+
+#inputPatent{
+    width: 390px;
+}
+
+</style>

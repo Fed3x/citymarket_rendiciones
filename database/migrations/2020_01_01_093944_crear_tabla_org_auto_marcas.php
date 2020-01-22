@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaRendiciones extends Migration
+class CrearTablaOrgAutoMarcas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CrearTablaRendiciones extends Migration
      */
     public function up()
     {
-        Schema::create('rendiciones', function (Blueprint $table) {
+        Schema::create('org_auto_marcas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
             $table->string('descripcion', 50);
 
-
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('org_usuarios');
 
             $table->timestamp('creado_el');
             $table->string('creado_por', 20);
@@ -35,6 +33,6 @@ class CrearTablaRendiciones extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rendiciones');
+        Schema::dropIfExists('org_auto_marcas');
     }
 }

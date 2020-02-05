@@ -2,4 +2,4 @@
 
 @section('content')
 <tareas-component></tareas-component>
-@endsection
+@endsection    

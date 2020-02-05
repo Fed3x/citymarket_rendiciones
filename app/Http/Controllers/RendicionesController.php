@@ -15,7 +15,7 @@ class RendicionesController extends Controller
 
     public function index()
     {
-        $rendiciones = Rendicion::orderBy('id')->get();
+        $rendiciones = Rendicion::where('id_usuario',auth()->user()->id)->orderBy('id')->get();
         return $rendiciones;
     }
     public function store(Request $request)

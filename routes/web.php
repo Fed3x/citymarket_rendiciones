@@ -34,7 +34,7 @@ Route::get('/rendiciones', function () {
 
 Route::get('/flotas', function(){
     return view('flota');
-});
+});      
 
 Route::get('/pruebas', 'SitiosSQLSRVController@importar');
 
@@ -50,14 +50,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dataSitios', 'DataController@dataSitios')->name('ciudades');
 
-Route::ApiResource('tarea', 'TareasController');
+Route::ApiResource('tarea', 'TareasController');    
 Route::ApiResource('sitio', 'SitiosController');
 Route::ApiResource('distancia', 'DistanciasController');
 Route::ApiResource('rendicion', 'RendicionesController');
 Route::ApiResource('rendicion_detalles', 'RendicionDetallesController');
 Route::ApiResource('flota', 'FlotasController');
 Route::ApiResource('auto_marca', 'AutoMarcasController');
-Route::ApiResource('auto_modelo','AutoModelosController');
+Route::ApiResource('auto_modelo','AutoModelosController',['except'=>['store','index','show','destroy']]);
 
 Route::get('/logout', function(){
     Session::flush();

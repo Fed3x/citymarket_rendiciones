@@ -1,8 +1,8 @@
 <template>
     <div class="modal fade" id="DetallesRendicionModal" tabindex="-1" role="dialog"
         aria-labelledby="DetallesRendicionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document" style="min-width: 100%; margin: 5px 0px 5px 0px;"> <!--style="min-width: 100%; margin: 5px 0px 5px -9px; -->
-            <div class="modal-content" style="min-height: 100vh;"> <!--style="min-height: 100vh;"-->
+        <div class="modal-dialog modal-xl" role="document"> <!--style="min-width: 100%; margin: 5px 0px 5px -9px; -->
+            <div class="modal-content"> <!--style="min-height: 100vh;"-->
                     <div class="modal-header">
                         <h5 class="modal-title" id="DetallesRendicionModalLabel">Detalles</h5>
                         
@@ -12,7 +12,7 @@
                         
                     </div>
                     <div class="modal-body">
-                        <div class="btn-group" role="group" aria-label="Basic example" style="float: right;" >
+                        <div class="btn-group btn-agregar" role="group" aria-label="Basic example">
                            <button @click="AgregarDetalle()" class="btn btn-primary" type="button"><i class="fas fa-map-signs"></i> Agregar Detalle</button>
                         </div>
                         <br>
@@ -21,13 +21,13 @@
                             <table class="table table-hover table-sm table-borderless">
                                     <thead class="">
                                         <tr>
-                                            <th scope="col" class="col-sm-1 text-center">#</th>
-                                            <th scope="col" class="col-sm-1 text-center">Fecha</th>
-                                            <th scope="col" class="col-sm-3 text-center">Sitio Desde</th>
-                                            <th scope="col" class="col-sm-3 text-center">Sitio Hasta</th>
-                                            <th scope="col" class="col-sm-1 text-center">Kilometraje</th>
-                                            <th scope="col" class="col-sm-1 text-center">Finalidad</th>
-                                            <th scope="col" class="col-sm-1 text-center">Accion</th>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Sitio Desde</th>
+                                            <th>Sitio Hasta</th>
+                                            <th>Kilometraje</th>
+                                            <th>Finalidad</th>
+                                            <th>Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -153,3 +153,14 @@
       
     }
 </script>
+
+<style> 
+    .btn-agregar{
+        position: absolute !important;
+        right: 10px !important;
+    }
+
+    .vs__dropdown-menu{
+        position: relative !important;
+    }
+</style>

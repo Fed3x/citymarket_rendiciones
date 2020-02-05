@@ -25,7 +25,7 @@
                                         <div class="form-row">
                                             <input v-model="form.id" name="id" type="hidden">
                                             <div class="form-group col-md-12">
-                                                <label>Descripcion</label>
+                                                <label>Descripcion</label>  
                                                 <input v-model="form.descripcion"
                                                         name="descripcion"
                                                         type="text" 

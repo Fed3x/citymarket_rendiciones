@@ -1,7 +1,6 @@
 <template>
 <div class="container">
-    <form-tarea-component  @nuevo="AgregarTarea">
-    </form-tarea-component>
+    <form-tarea-component  @nuevo="AgregarTarea"></form-tarea-component>
     <tarea-component 
         v-for="(tarea, index) in tareas" 
         :key="tarea.id" 
@@ -12,7 +11,7 @@
 </div>
 </template>
  
-<script>
+<script>             
     export default {
         data(){
             return{

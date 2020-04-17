@@ -34,7 +34,16 @@ class RendicionesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $rendicion = Rendicion::find($id);
+        $rendicion->descripcion = $request->descripcion;
+        $rendicion->actualizado_el = Carbon::now();
+        $rendicion->actualizado_por = auth()->user()->usuario;
+        
+        $rendicion->save();
+
+        $rendicion = Rendicion::where('id', $id)->get();
+
+        return $rendicion->last();
     }
 
     public function destroy($id)

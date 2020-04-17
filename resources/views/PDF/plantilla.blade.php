@@ -75,10 +75,10 @@
                     <table class="table table-sm table-borderless" style=" margin:0px;">
                         <tbody>
                             <tr>
-                                <td class="col-3">Marca: <b>Volkswagen</b></td>
-                                <td class="col-3">Modelo: <b>Gol</b></td>
-                                <td class="col-3">Patente: <b>HEA 950</b></td>
-                                <td class="col-3">Año: <b>2019</b></td>
+                                <td class="col-3">Marca: <b>{{$flota->auto_marca->descripcion ?? 'No asignado'}}</b></td>
+                            <td class="col-3">Modelo: <b>{{$flota->auto_modelo->descripcion ?? 'No asignado'}}</b></td>
+                                <td class="col-3">Patente: <b>{{$flota->matricula ?? 'No asignado'}}</b></td>
+                            <td class="col-3">Año: <b>{{$flota->año ?? 'No asignado'}}</b></td>
                             </tr>
                         </tbody>
                     </table>

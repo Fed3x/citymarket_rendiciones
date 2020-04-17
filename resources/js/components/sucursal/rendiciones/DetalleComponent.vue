@@ -4,17 +4,17 @@
         <td v-if="modoEdicion"><input type="date" class="form-control form-control-sm" v-model="draft.fecha"></td>
         <td v-else>{{moment(detalle_rendicion.fecha).format('DD/MM/YYYY')}}</td>
         
-        <td v-if="modoEdicion"><v-select v-model="draft.id_sitio_desde" label="descripcion" @input="Desde"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
-        <td v-else>{{detalle_rendicion.sitio_desde.descripcion}}</td>
-        <td v-if="modoEdicion"><v-select v-model="draft.id_sitio_hasta" label="descripcion" @input="Hasta"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
-        <td v-else>{{detalle_rendicion.sitio_hasta.descripcion}}</td>
-        <td v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.kilometraje"></td>
-        <td v-else>{{detalle_rendicion.kilometraje}}</td>
-        <td v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.finalidad"></td>
-        <td v-else>{{detalle_rendicion.finalidad}}</td>
+        <td class="col-sm-4" v-if="modoEdicion"><v-select v-model="draft.id_sitio_desde" label="descripcion" @input="Desde"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
+        <td class="col-sm-4" v-else>{{detalle_rendicion.sitio_desde.descripcion}}</td>
+        <td class="col-sm-4" v-if="modoEdicion"><v-select v-model="draft.id_sitio_hasta" label="descripcion" @input="Hasta"  :options="sitios" :reduce="sitios => sitios.id" ></v-select></td>
+        <td class="col-sm-4" v-else>{{detalle_rendicion.sitio_hasta.descripcion}}</td>
+        <td class="col-sm-1" v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.kilometraje"></td>
+        <td class="col-sm-1" v-else>{{detalle_rendicion.kilometraje}}</td>
+        <td class="col-sm-2" v-if="modoEdicion"><input type="text" class="form-control form-control-sm" v-model="draft.finalidad"></td>
+        <td class="col-sm-2" v-else>{{detalle_rendicion.finalidad}}</td>
 
-        <td v-if="modoEdicion"><a href="#" v-on:click="detalle_rendicion.id == null ? Agregar():Actualizar()" data-toggle="tooltip" data-placement="auto" title="Guardar la distancia" ><i class="fas fa-save text-primary fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
-        <td v-else><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
+        <td class="col-sm-1" v-if="modoEdicion"><a href="#" v-on:click="detalle_rendicion.id == null ? Agregar():Actualizar()" data-toggle="tooltip" data-placement="auto" title="Guardar la distancia" ><i class="fas fa-save text-primary fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
+        <td class="col-sm-1" v-else><a href="#" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="fas fa-edit text-success fa-lg"></i></a><b> | </b> <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-danger fa-lg"></i>  </a></td>
         
     </tr>    
 </template>        
@@ -115,21 +115,18 @@
                 this.BuscarDistancia(this.draft.id_sitio_desde, valor);
             },
             BuscarDistancia(desde, hasta){
-                console.log('Buscando distancia.. desde: ' + desde + ' hasta: '+ hasta);
                 const parametros = {
                     id_sitio_desde: desde,
                     id_sitio_hasta: hasta
                 };
                 
-                axios.post('/BuscarDistancias', parametros)
+                axios.get('/BuscarDistancias', parametros)
                      .then((response) => {
-                         console.log(this.draft.kilometraje);
                          if(response.data.kilometraje != null){
                             this.draft = Object.assign({}, this.draft, { kilometraje: response.data.kilometraje });
                          }else{
                             this.draft = Object.assign({}, this.draft, { kilometraje: 0 });
                          }
-                         console.log(this.draft.kilometraje);
                 }).catch((error)=> {
                     swal("Error!", "Algo anda mal", "warning");
                 });

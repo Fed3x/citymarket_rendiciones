@@ -12,6 +12,16 @@
             </div>
             <importar-distancia-component @importar="ImportarDistancia(...arguments)"></importar-distancia-component>
             <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                        <v-select v-model="filtro" label="descripcion" placeholder="Buscar Distancias" :options="sitios" :reduce="sitios => sitios.id" @input="Filtro"></v-select>
+                        </div>
+                    </div>
+                </div>
+                
+             
+
                 <div id="table_distancias" class="table-responsive">
                     <table class="table table-hover table-sm table-borderless">
                             <thead class="">
@@ -35,7 +45,29 @@
                                                     
                                 </distancia-component> 
                             </tbody>
+                            
+                            
+                                                    
                     </table>
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <span>
+                                        Mostranto registros desde el <b>{{ paginacion.from}}</b> al <b>{{ paginacion.to}}</b> | Total: <b>{{ paginacion.total}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-toolbar float-right" role="toolbar">
+                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                            <button type="button" class="btn btn-light" @click="PrimeraPagina()"><i class="fas fa-angle-double-left"></i></button>
+                                            <button type="button" class="btn btn-light" @click="AnteriorPagina()"><i class="fas fa-angle-left"></i></button>
+                                            <button type="button" class="btn btn-light" @click="SiguientePagina()"><i class="fas fa-angle-right"></i></button>
+                                            <button type="button" class="btn btn-light" @click="UltimaPagina()"><i class="fas fa-angle-double-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
                 </div>
             </div>
         </div>
@@ -62,20 +94,47 @@
             return{
                 sitios:[],
                 distancias:[],
+                paginacion: [{
+                    'count': '',
+                    'current_page': '',
+                    'first_page_url': '',
+                    'last_page_url': '',
+                    'next_page_url': '',
+                    'prev_page_url': '',
+                    'total': '',
+                    'to' : '',
+                    'from' : '',
+                    'per_page': '',
+                }],
+                filtro : ''
             }
         },
         mounted() {
-            axios.get('/distancia')
-                 .then((response)=>{
-                     
-                     this.distancias = response.data;
-            });
             axios.get('/sitio')
-            .then((response)=>{
-                this.sitios = response.data;
+                .then((response)=>{
+                    this.sitios = response.data;
             });
+            this.CargarDistancias();
+            
         },
         methods: {
+            CargarDistancias(){
+                axios.get('/distancia')
+                .then((response)=>{
+                    this.distancias = response.data.data;
+
+                    this.paginacion.total = response.data.total;
+                    this.paginacion.current_page = response.data.current_page;
+                    this.paginacion.first_page_url = response.data.first_page_url;
+                    this.paginacion.last_page_url = response.data.last_page_url;
+                    this.paginacion.next_page_url = response.data.next_page_url;
+                    this.paginacion.prev_page_url = response.data.prev_page_url;
+                    this.paginacion.to = response.data.to;
+                    this.paginacion.from = response.data.from;
+                    this.paginacion.per_page = response.data.per_page;
+                });
+                
+            },
             AgregarDistancia(){
                 this.distancias.push({id_sitio_desde: '',
                     id_sitio_hasta: '',
@@ -112,6 +171,94 @@
             ImportarDistanciaModal(){
                 $('#ImportarSitioModal').modal('show');
             },
+            PrimeraPagina(){
+                axios.get(this.paginacion.first_page_url)
+                 .then((response)=>{
+                     this.distancias = response.data.data;
+                     this.paginacion.total = response.data.total;
+                     this.paginacion.current_page = response.data.current_page;
+                     this.paginacion.first_page_url = response.data.first_page_url;
+                     this.paginacion.last_page_url = response.data.last_page_url;
+                     this.paginacion.next_page_url = response.data.next_page_url;
+                     this.paginacion.prev_page_url = response.data.prev_page_url;
+                     this.paginacion.to = response.data.to;
+                     this.paginacion.from = response.data.from;
+                     this.paginacion.per_page = response.data.per_page;
+                });
+            },
+            AnteriorPagina(){
+                axios.get(this.paginacion.prev_page_url)
+                 .then((response)=>{
+                     this.distancias = response.data.data;
+                     this.paginacion.total = response.data.total;
+                     this.paginacion.current_page = response.data.current_page;
+                     this.paginacion.first_page_url = response.data.first_page_url;
+                     this.paginacion.last_page_url = response.data.last_page_url;
+                     this.paginacion.next_page_url = response.data.next_page_url;
+                     this.paginacion.prev_page_url = response.data.prev_page_url;
+                     this.paginacion.to = response.data.to;
+                     this.paginacion.from = response.data.from;
+                     this.paginacion.per_page = response.data.per_page;
+                });
+
+            },
+            SiguientePagina(){
+                axios.get(this.paginacion.next_page_url)
+                 .then((response)=>{
+                     this.distancias = response.data.data;
+                     this.paginacion.total = response.data.total;
+                     this.paginacion.current_page = response.data.current_page;
+                     this.paginacion.first_page_url = response.data.first_page_url;
+                     this.paginacion.last_page_url = response.data.last_page_url;
+                     this.paginacion.next_page_url = response.data.next_page_url;
+                     this.paginacion.prev_page_url = response.data.prev_page_url;
+                     this.paginacion.to = response.data.to;
+                     this.paginacion.from = response.data.from;
+                     this.paginacion.per_page = response.data.per_page;
+                });
+            },
+            UltimaPagina(){
+                axios.get(this.paginacion.last_page_url)
+                 .then((response)=>{
+                     this.distancias = response.data.data;
+                     this.paginacion.total = response.data.total;
+                     this.paginacion.current_page = response.data.current_page;
+                     this.paginacion.first_page_url = response.data.first_page_url;
+                     this.paginacion.last_page_url = response.data.last_page_url;
+                     this.paginacion.next_page_url = response.data.next_page_url;
+                     this.paginacion.prev_page_url = response.data.prev_page_url;
+                     this.paginacion.to = response.data.to;
+                     this.paginacion.from = response.data.from;
+                     this.paginacion.per_page = response.data.per_page;
+                });
+            },
+            Filtro(){
+                const parametros = {
+                    filtro: this.filtro,
+                };
+                
+                if(this.filtro !== null){
+                    axios.get('/distancia/' + this.filtro, parametros)
+                    .then((response) => {
+                        this.distancias = response.data.data;
+                        this.paginacion.total = response.data.total;
+                        this.paginacion.current_page = response.data.current_page;
+                        this.paginacion.first_page_url = response.data.first_page_url;
+                        this.paginacion.last_page_url = response.data.last_page_url;
+                        this.paginacion.next_page_url = response.data.next_page_url;
+                        this.paginacion.prev_page_url = response.data.prev_page_url;
+                        this.paginacion.to = response.data.to;
+                        this.paginacion.from = response.data.from;
+                        this.paginacion.per_page = response.data.per_page;
+                    }).catch((error)=> {
+                        swal("Error!", "Algo anda mal", "warning");
+                    });
+                }else{
+                    this.CargarDistancias();
+                }
+                
+            }
+
         }
       
     }

@@ -17,6 +17,7 @@
         </li>
         </ul>
         <flota-component></flota-component>
+        <agregar-component></agregar-component>
     </div>
 </template>
 
@@ -48,12 +49,7 @@
         },
         data(){
             return{
-                modoEdicion: false,
-                draft:[{
-                    id_sitio_desde: '',
-                    id_sitio_hasta: '',
-                    kilometraje: ''
-                }],
+
             }
         },
         mounted() {

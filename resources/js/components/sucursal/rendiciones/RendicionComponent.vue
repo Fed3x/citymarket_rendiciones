@@ -1,19 +1,26 @@
 <template>
     <div class="row alert alert-dark ">
         <div class="col-md-6 my-auto" role="alert">
-            <h5 style="margin: 0px"><b>{{rendicion.descripcion}} </b><a href="#" style="color: green" v-on:click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar descripcion" ><i class="far fa-edit"></i></a></h5>
-            <small >
-
-                 
-            CREADO EL: <b>{{moment(rendicion.creado_el).format('DD-MM-YYYY HH:mm')}}</b>
+            <h5 style="margin: 0px" v-if="modoEdicion"><input type="text" class="form-control form-control-sm inputRendicion" v-model="draft">
+                <a href="#" @click="Actualizar()" data-toggle="tooltip" data-placement="auto" title="Actualizar descripcion">
+                    <i class="fas fa-save text-primary fa-lg"></i>
+                </a>
+            </h5>
+            <h5 style="margin: 0px" v-else><b>{{rendicion.descripcion}} </b>
+                <a href="#" style="color: green" @click="Modificar()" data-toggle="tooltip" data-placement="auto" title="Modificar descripcion" >
+                    <i class="far fa-edit"></i>
+                </a>
+            </h5>
+            <small >  
+                CREADO EL: <b>{{moment(rendicion.creado_el).format('DD-MM-YYYY HH:mm')}}</b>
             </small>
         </div>
         <div class="col-md-6 my-auto" role="group" style="text-align: end;" >
 
 
             <a href="#" @click="VerDetalles()" data-toggle="tooltip" data-placement="auto" title="Ver Detalles" ><i class="fas fa-eye text-info  fa-lg"></i></a><b> | </b>
-            <a href="#" v-on:click="Exportar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>
-            <a href="#" v-on:click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-primary fa-lg"></i></a>
+            <a href="#" @click="Exportar()" data-toggle="tooltip" data-placement="auto" title="Modificar la distancia" ><i class="far fa-file-pdf text-danger  fa-lg"></i></a><b> | </b>
+            <a href="#" @click="Eliminar()" data-toggle="tooltip" data-placement="auto" title="Eliminar la distancia" ><i class="fas fa-trash-alt text-primary fa-lg"></i></a>
         </div>
     </div>
 </template>
@@ -26,71 +33,45 @@
     Vue.component(HasError.name, HasError)
     Vue.component(AlertError.name, AlertError)
     export default {
-        props:['rendicion'],
+        props:['rendicion', 'index'],
+        created: function() {
+            EventBus.$on('modificando', function(index){
+                if (this.index != index){
+                    this.modoEdicion = false;
+                }
+            }.bind(this));
+        },
         data(){
             return{
                 moment: moment,
-            //   form:new Form({
-            //         id: '',
-            //         descripcion: '',
-            //     }),
-            //     distancias:[],
-            //     modoEdicion: false,
+                modoEdicion: false,
+                draft :'',
+                
             }
         },
-        mounted() {
-            console.log(this.rendicion);
-            // axios.get('/distancia')
-            //      .then((response)=>{
-                     
-            //          this.distancias = response.data;
-            // });
-            // axios.get('/sitio')
-            // .then((response)=>{
-            //     this.sitios = response.data;
-            // });
-        },
         methods: {
-            AgregarNuevaRendicion(){
-                this.modoEdicion = false;
-                this.form.reset();
-                $('#NuevaRendicionModal').modal('show');
-            },
-            NuevaRendicion(){
-                this.form.post('/rendicion')
-                     .then((response) => {
-                         console.log(response);
-                        // const rendicion= response.data;
-                        // this.rendiciones.push(rendicion);
-                        // this.form.reset();
-                     });
-                
-            },
             VerDetalles(){
-                console.log('llamando a event bus');
                 EventBus.$emit('actualizar', this.rendicion.id);
                  
             },
-            NuevaDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
-                swal(
-                    'Creado!',
-                    'La distancia fue guardada!',
-                    'success'
-                )
+            Modificar(){
+                EventBus.$emit('modificando', this.index);
+                this.draft = this.rendicion.descripcion;
+                this.modoEdicion = true;
             },
-            ImportarDistancia(distancia){
-                for (let i in distancia){
-                     this.distancias.push(distancia[i]);
-                }
-            },
-            ActualizarDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
-                swal(
-                    'Actualizado!',
-                    'La distancia fue actualizada',
-                    'info'
-                )
+            Actualizar(){
+                const parametros = {
+                    descripcion: this.draft
+                };
+                
+                axios.put('/rendicion/'+this.rendicion.id, parametros)
+                    .then((response)=>{
+                        this.$emit('actualizar', response.data, this.index);
+                        this.modoEdicion = false;
+                    })
+                    .catch((error)=>{
+                        swal("Error!", "Algo anda mal" +"\n" + error.response.data.message, "warning");
+                    });
             },
             Eliminar(){
                 axios.delete('/rendicion/'+this.rendicion.id)
@@ -100,14 +81,17 @@
                         swal("Error!", "Algo anda mal", "warning");
                 });
             },
-            ImportarDistanciaModal(){
-                $('#ImportarSitioModal').modal('show');
-            },
             Exportar(){
-                console.log('exportar');
                 window.location.href = '/pdf/' + this.rendicion.id;
+
             }
         }
-      
     }
 </script>
+
+<style> 
+    .inputRendicion{
+        display: unset;
+        width: auto;
+    }
+</style>

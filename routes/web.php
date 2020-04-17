@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function (){
 
+
 Route::get('/sitios', function () {
     return view('sucursales');
 });
@@ -28,6 +29,9 @@ Route::get('/sitios', function () {
 Route::get('/distancias', function () {
     return view('distancias');
 });
+
+Route::get('/distancia/{d}', 'DistanciasController@filtro');
+
 Route::get('/rendiciones', function () {
     return view('rendiciones');
 });
@@ -36,7 +40,8 @@ Route::get('/flotas', function(){
     return view('flota');
 });      
 
-Route::get('/pruebas', 'SitiosSQLSRVController@importar');
+Route::get('/importSQLSRV', 'SitiosSQLSRVController@importar');
+
 
 Route::get('/pdf/{id}', 'PDFController@exportar');
 
@@ -57,7 +62,8 @@ Route::ApiResource('rendicion', 'RendicionesController');
 Route::ApiResource('rendicion_detalles', 'RendicionDetallesController');
 Route::ApiResource('flota', 'FlotasController');
 Route::ApiResource('auto_marca', 'AutoMarcasController');
-Route::ApiResource('auto_modelo','AutoModelosController',['except'=>['store','index','show','destroy']]);
+Route::ApiResource('auto_modelo','AutoModelosController');
+Route::ApiResource('usuario_flota', 'UsuarioFlotaController');
 
 Route::get('/logout', function(){
     Session::flush();

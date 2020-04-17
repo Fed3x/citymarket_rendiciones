@@ -26,6 +26,7 @@ class CrearTablaDistancias extends Migration
             $table->string('creado_por', 20);
             $table->timestamp('actualizado_el')->nullable();
             $table->string('actualizado_por', 20)->nullable();
+
         });
     }
 

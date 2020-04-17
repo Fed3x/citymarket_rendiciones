@@ -13,7 +13,7 @@ class CrearTablaUsuariosFlota extends Migration
      */
     public function up()
     {
-        Schema::create('org_usuarios_flota', function (Blueprint $table) {
+        Schema::create('org_usuarios_flotas', function (Blueprint $table) {
             $table->bigIncrements('id');          
 
             $table->unsignedBigInteger('id_auto_marca');
@@ -42,6 +42,6 @@ class CrearTablaUsuariosFlota extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('org_usuarios_flota');
+        Schema::dropIfExists('org_usuarios_flotas');
     }
 }

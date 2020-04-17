@@ -25,9 +25,11 @@ class DistanciasImport implements ToModel, WithValidation, SkipsOnFailure, WithH
     public function model(array $row)
     {
         ++$this->rows;
-
-        $existe = Distancia::where('id_sitio_desde', getID('App\Sitio', 'descripcion' ,  $row['sitio_desde']))->where('id_sitio_hasta', getID('App\Sitio', 'descripcion' ,  $row['sitio_hasta']))->exists();
-
+        
+        $existe = Distancia::where([['id_sitio_desde', '=', getID('App\Sitio', 'descripcion' ,  $row['sitio_desde'])],['id_sitio_hasta', '=',  getID('App\Sitio', 'descripcion' ,  $row['sitio_hasta'])]])
+                        ->orWhere([['id_sitio_desde', '=', getID('App\Sitio', 'descripcion' ,  $row['sitio_hasta'])],['id_sitio_hasta', '=',  getID('App\Sitio', 'descripcion' ,  $row['sitio_desde'])]])
+                        ->exists();
+        
         if(!$existe){
             $data = new Distancia([
                 'id_sitio_desde' => getID('App\Sitio', 'descripcion' ,  $row['sitio_desde']),

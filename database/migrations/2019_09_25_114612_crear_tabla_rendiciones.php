@@ -13,7 +13,7 @@ class CrearTablaRendiciones extends Migration
      */
     public function up()
     {
-        Schema::create('rendiciones', function (Blueprint $table) {
+        Schema::create('org_rendiciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 50);
 
@@ -35,6 +35,6 @@ class CrearTablaRendiciones extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rendiciones');
+        Schema::dropIfExists('org_rendiciones');
     }
 }

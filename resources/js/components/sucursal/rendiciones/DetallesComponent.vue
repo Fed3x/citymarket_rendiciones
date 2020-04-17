@@ -1,8 +1,8 @@
 <template>
     <div class="modal fade" id="DetallesRendicionModal" tabindex="-1" role="dialog"
         aria-labelledby="DetallesRendicionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document"> <!--style="min-width: 100%; margin: 5px 0px 5px -9px; -->
-            <div class="modal-content"> <!--style="min-height: 100vh;"-->
+        <div class="modal-dialog modal-rendicion" role="document">
+            <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="DetallesRendicionModalLabel">Detalles</h5>
                         
@@ -17,7 +17,7 @@
                         </div>
                         <br>
                         <br>
-                        <div class="table-responsive">
+                        <div class="table-responsive table-rendicion">
                             <table class="table table-hover table-sm table-borderless">
                                     <thead class="">
                                         <tr>
@@ -71,8 +71,7 @@
         mounted() {
             
             self = this;
-            EventBus.$on('actualizar', function(parametros) { // Para recibir un evento
-                console.log('recibi el event bus');
+            EventBus.$on('actualizar', function(parametros) { 
                 self.CargarDetalles(parametros);
             });
             axios.get('/sitio')
@@ -92,9 +91,7 @@
             },
             CargarDetalles(detalle){
                 this.id_rendicion = detalle;
-                console.log('estoy actualizando los detalles');
-                console.log(detalle);
-               
+
                 axios.get('/rendicion_detalles/' + detalle)
                      .then((response)=>{
                         this.detalles_rendicion = response.data;
@@ -107,34 +104,16 @@
                 this.detalles_rendicion = this.detalles_rendicion.splice();
                 console.log('vaciando array');
             },
-            // AgregarNuevaRendicion(){
-            //     this.modoEdicion = false;
-            //     this.form.reset();
-            //     $('#NuevaRendicionModal').modal('show');
-            // },
-            // NuevaRendicion(){
-            //     this.form.post('/rendicion')
-            //          .then((response) => {
-            //              console.log(response);
-            //             // const rendicion= response.data;
-            //             // this.rendiciones.push(rendicion);
-            //             // this.form.reset();
-            //          });
-                
-            // },
+
             NuevoDetalle(detalle_rendicion, index){
                 this.detalles_rendicion.splice(index, 1, detalle_rendicion);
                 swal(
-                    'Creado!',
+                    'Nuevo registro creado exitosamente!',
                     'La distancia fue guardada!',
                     'success'
                 )
             },
-            // ImportarDistancia(distancia){
-            //     for (let i in distancia){
-            //          this.distancias.push(distancia[i]);
-            //     }
-            // },
+
             ActualizarDetalle(detalle_rendicion, index){
                 this.detalles_rendicion.splice(index, 1, detalle_rendicion);
                 swal(
@@ -146,9 +125,6 @@
             EliminarDetalle(index){
                 this.detalles_rendicion.splice(index,1);
             },
-            // ImportarDistanciaModal(){
-            //     $('#ImportarSitioModal').modal('show');
-            // },
         }
       
     }
@@ -160,7 +136,13 @@
         right: 10px !important;
     }
 
-    .vs__dropdown-menu{
-        position: relative !important;
+    .table-rendicion{
+        overflow-x: unset !important;
+    }
+    .modal-rendicion{
+        max-width: 90%;
+        padding: 0px;
+        max-height: 90vh;
+    
     }
 </style>

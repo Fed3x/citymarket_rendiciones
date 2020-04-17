@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleRendicion extends Model
 {
-    protected $table= 'detalles_rendicion';
+    protected $table= 'org_rendiciones_detalles';
 
     protected $fillable = [
     'id_rendicion','id_sitio_desde','id_sitio_hasta', 'kilometraje','actualizado_el','actualizado_por', 'fecha', 'finalidad'

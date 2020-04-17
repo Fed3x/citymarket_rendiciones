@@ -37,4 +37,9 @@ class Usuario extends Authenticatable
         return $this->hasMany('App\Tarea', 'id_usuario', 'id');
     }
 
+    public function usuarios_flotas()
+    {
+        return $this->hasMany('App\UsuarioFlota', 'id_usuario');
+    }
+
 }

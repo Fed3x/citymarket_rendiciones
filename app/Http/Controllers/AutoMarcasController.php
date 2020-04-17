@@ -19,15 +19,14 @@ class AutoMarcasController extends Controller
     }
     public function store(Request $request)
     {
-        $rendicion = New Rendicion();
-        $rendicion->descripcion = $request->descripcion;
-        $rendicion->creado_el = Carbon::now();
-        $rendicion->creado_por = auth()->user()->usuario;
-        $rendicion->save();
-        $id = $rendicion->id;
-        $nueva_rendicion = Rendicion::where('id', $id)->get();
-        
-        return $nueva_rendicion->last();
+        $auto_marca = New AutoMarca();
+        $auto_marca->descripcion = $request->descripcion;
+        $auto_marca->creado_el = Carbon::now();
+        $auto_marca->creado_por = auth()->user()->usuario;
+        $auto_marca->save();
+        $id = $auto_marca->id;
+        $nueva_marca = AutoMarca::where('id', $id)->get();
+        return $nueva_marca->last();
     }
 
     public function update(Request $request, $id)

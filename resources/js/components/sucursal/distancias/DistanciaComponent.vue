@@ -122,12 +122,12 @@
 <style >
 #dist_desde{
     width: 380px;
-
+    position: absolute;
 }
 
 #dist_hasta{
     width: 380px;
-
+    position: absolute;
 }
 
 </style>

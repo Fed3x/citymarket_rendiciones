@@ -56,6 +56,7 @@
                     :index="index"
                     @eliminar="EliminarRendicion(index)"
                     @ver_detalles="ModalDetalle(detalle)"
+                    @actualizar="ActualizarRendicion(...arguments, index)"
                     ></rendicion-component>
                 </div>
             </div>
@@ -103,21 +104,8 @@
                      });
                 
             },
-            NuevaDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
-                swal(
-                    'Creado!',
-                    'La distancia fue guardada!',
-                    'success'
-                )
-            },
-            ImportarDistancia(distancia){
-                for (let i in distancia){
-                     this.distancias.push(distancia[i]);
-                }
-            },
-            ActualizarDistancia(distancia, index){
-                this.distancias.splice(index, 1, distancia);
+            ActualizarRendicion(rendicion, index){
+                this.rendiciones.splice(index, 1, rendicion);
                 swal(
                     'Actualizado!',
                     'La distancia fue actualizada',
@@ -135,9 +123,6 @@
                     'La distancia fue eliminada!',
                     'success'
                 )
-            },
-            ImportarDistanciaModal(){
-                $('#ImportarSitioModal').modal('show');
             },
         }
       

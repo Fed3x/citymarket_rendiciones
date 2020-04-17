@@ -21,4 +21,9 @@ class AutoModelo extends Model
     {
        return $this->belongsTo('App\AutoMarca', 'id_auto_marca');
     }
+
+    public function usuarios_flotas()
+    {
+        return $this->hasMany('App\UsuarioFlota', 'id_auto_modelo');
+    }
 }

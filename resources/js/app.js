@@ -20,6 +20,14 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 // Vue.component('sitios-component', require('./components/sucursal/SitiosComponent.vue').default);
 
+// GRAFICOS
+Vue.component('grafico-component', require('./components/graficos/graficos.vue').default);
+
+
+// ICONOS
+Vue.component('agregar-component', require('./components/iconos/AgregarComponent.vue').default);
+
+
 Vue.component('sitios-component', require('./components/sucursal/sitios/SitiosComponent.vue').default);
 Vue.component('distancias-component', require('./components/sucursal/distancias/DistanciasComponent.vue').default);
 Vue.component('distancia-component', require('./components/sucursal/distancias/DistanciaComponent.vue').default);

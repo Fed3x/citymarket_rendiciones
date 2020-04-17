@@ -17,12 +17,8 @@ class DistanciasController extends Controller
 {
     public function index()
     {
-        $distancias = Distancia::orderBy('id', 'asc')->get();
-
-        return $distancias->each(function ($distancia){
-                $distancia->sitio_desde;
-                $distancia->sitio_hasta;
-            });
+        $distancias = Distancia::orderBy('id', 'asc')->with(['sitio_desde','sitio_hasta'])->paginate(15);
+        return $distancias;
     }
 
     public function store(Request $request)
@@ -70,6 +66,13 @@ class DistanciasController extends Controller
         return $kilometraje;
     }
 
+    public function filtro(Request $request, $filtro){
+        $distancias = Distancia::where('id_sitio_desde', $filtro)
+                    ->orWhere('id_sitio_hasta', $filtro)
+                    ->with(['sitio_desde','sitio_hasta'])->paginate(15);
+        return $distancias;
+    }
+    
     public function import(Request $request)
     {
         $this->validate($request,[

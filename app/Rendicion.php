@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Rendicion extends Model
 {
-    protected $table= 'rendiciones';
+    protected $table= 'org_rendiciones';
 
     protected $fillable = [
     'descripcion','creado_el','creado_por','actualizado_el','actualizado_por'

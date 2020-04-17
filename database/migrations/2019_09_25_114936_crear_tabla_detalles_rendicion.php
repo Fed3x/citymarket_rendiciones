@@ -13,12 +13,12 @@ class CrearTablaDetallesRendicion extends Migration
      */
     public function up()
     {
-        Schema::create('detalles_rendicion', function (Blueprint $table) {
+        Schema::create('org_rendiciones_detalles', function (Blueprint $table) {
             $table->bigIncrements('id');
 
 
             $table->unsignedBigInteger('id_rendicion');
-            $table->foreign('id_rendicion')->references('id')->on('rendiciones');
+            $table->foreign('id_rendicion')->references('id')->on('org_rendiciones');
 
             $table->unsignedBigInteger('id_sitio_desde');
             $table->foreign('id_sitio_desde')->references('id')->on('org_sitios');
@@ -39,6 +39,6 @@ class CrearTablaDetallesRendicion extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('detalles_rendicion');
+        Schema::dropIfExists('org_rendiciones_detalles');
     }
 }
